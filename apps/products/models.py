@@ -23,7 +23,7 @@ class Product(BaseModel):
     name = models.CharField(_('Name'),max_length=100)
     url = models.URLField(_('Url'),null=True,blank=True)
     image = models.ImageField(_('Image'),null=True,blank=True)
-    shop = models.ForeignKey(Shop,verbose_name=_('Shop'), related_name='products')
+    shop = models.ForeignKey(Shop,verbose_name=_('Shop'), related_name='products', null=True, blank=True)
 
     class Meta:
         verbose_name = _('Product')
