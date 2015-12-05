@@ -48,7 +48,9 @@ INSTALLED_APPS = [
 
 WISHES_LIST_APPS =[
     'core',
-    'users'
+    'users',
+    'products',
+    'wishes',
 ]
 
 INSTALLED_APPS += WISHES_LIST_APPS

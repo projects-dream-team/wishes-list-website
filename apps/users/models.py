@@ -111,7 +111,7 @@ class UserCode(models.Model):
         (PASSWORD_RECOVERY, _('Password recovery'))
     )
 
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, verbose_name=_('User'), related_name='user_codes')
     code = models.CharField(_('Code'), max_length=32)
     type = models.SmallIntegerField(_('Type'), choices=CODE_CHOICES)
     data = models.CharField(_('Additional data'), max_length=128, blank=True, null=True)
@@ -121,5 +121,22 @@ class UserCode(models.Model):
 
     objects = UserCodeManager()
 
+    class Meta:
+        verbose_name = _('User\'s code')
+        verbose_name_plural = _('User\'s codes')
+
     def __str__(self):
         return self.code
+
+@python_2_unicode_compatible
+class Friendship(BaseModel):
+    creator = models.ForeignKey(User, verbose_name=_('Creator'), related_name="friendship_creator_set")
+    friend = models.ForeignKey(User, verbose_name=_('Friend'), related_name="friend_set")
+
+    class Meta:
+        verbose_name = _('Friendship')
+        verbose_name_plural = _('Friendships')
+
+
+    def __str__(self):
+        return unicode(_('%(creator)s has added %(friend)s to firends.') % {'creator': self.creator.nick, 'friend': self.friend.nick})
