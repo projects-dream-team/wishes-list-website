@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-05 14:27+0100\n"
+"POT-Creation-Date: 2015-12-05 16:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,12 +40,11 @@ msgid "products"
 msgstr "produkty"
 
 #: apps/products/models.py:11 apps/products/models.py:23
-#: apps/wishes/models.py:14
+#: apps/wishes/models.py:19
 msgid "Name"
 msgstr "Nazwa"
 
 #: apps/products/models.py:12 apps/products/models.py:24
-#: apps/wishes/models.py:17
 msgid "Url"
 msgstr "Adres url"
 
@@ -61,13 +60,17 @@ msgstr "Sklepy"
 msgid "Image"
 msgstr "Plik graficzny"
 
-#: apps/products/models.py:29 apps/wishes/models.py:29
+#: apps/products/models.py:29 apps/wishes/models.py:45
 msgid "Product"
 msgstr "Product"
 
 #: apps/products/models.py:30
 msgid "Products"
 msgstr "Products"
+
+#: apps/products/models.py:36
+msgid "Has image"
+msgstr ""
 
 #: apps/users/admin.py:18
 msgid "Permissions"
@@ -145,7 +148,7 @@ msgstr "Kody użytkownika"
 msgid "Creator"
 msgstr "Twórca"
 
-#: apps/users/models.py:134 apps/wishes/models.py:47
+#: apps/users/models.py:134 apps/wishes/models.py:63
 msgid "Friend"
 msgstr "Znajomy"
 
@@ -166,52 +169,58 @@ msgstr "%(creator)s dodał do znajomych użytkownika %(friend)s."
 msgid "wishes"
 msgstr "lista prezentów"
 
-#: apps/wishes/models.py:15
+#: apps/wishes/models.py:20
 msgid "Date"
 msgstr "Data"
 
-#: apps/wishes/models.py:16
+#: apps/wishes/models.py:21
 msgid "Owner"
 msgstr "Właściciel"
 
-#: apps/wishes/models.py:20 apps/wishes/models.py:30 apps/wishes/models.py:46
+#: apps/wishes/models.py:22
+msgid "Access url"
+msgstr "Adres dostępowy"
+
+#: apps/wishes/models.py:25 apps/wishes/models.py:46 apps/wishes/models.py:62
 msgid "Event"
 msgstr "Wydarzenie"
 
-#: apps/wishes/models.py:21
+#: apps/wishes/models.py:26
 msgid "Events"
 msgstr "Wydarzenia"
 
-#: apps/wishes/models.py:31
+#: apps/wishes/models.py:37
+msgid "Is past"
+msgstr "Odbyło się"
+
+#: apps/wishes/models.py:47
 msgid "Reservation date"
 msgstr "Data rezerwacji"
 
-#: apps/wishes/models.py:32
+#: apps/wishes/models.py:48
 msgid "Reserved by"
 msgstr "Zarezerwowane przez"
 
-#: apps/wishes/models.py:33
+#: apps/wishes/models.py:49
 msgid "Reserved by anonymous"
 msgstr "Zarezerwowane przez anonimową osobę"
 
-#: apps/wishes/models.py:36
+#: apps/wishes/models.py:52
 msgid "Gift"
 msgstr "Prezent"
 
-#: apps/wishes/models.py:37
+#: apps/wishes/models.py:53
 msgid "Gifts"
 msgstr "Prezenty"
 
-#: apps/wishes/models.py:40
-#, python-format
-msgid "Product %(prduct_name)s is on %(event)s wishes list."
-msgstr ""
-"Produkt %(prduct_name)s jest na liście prezentów wydarzenia: %(event)s."
+#: apps/wishes/models.py:56
+msgid "Product %(product_name)s is on %(event)s wishes list."
+msgstr "Produkt %(product_name)s jest na liście prezentów wydarzenia: %(event)s."
 
-#: apps/wishes/models.py:50
+#: apps/wishes/models.py:66
 msgid "Event - invented friend"
 msgstr "Wydarzenie - zaproszony znajomy"
 
-#: apps/wishes/models.py:51
+#: apps/wishes/models.py:67
 msgid "Event - invented friends"
 msgstr "Wydarzenie - zaproszeni znajomi"

@@ -29,5 +29,11 @@ class Product(BaseModel):
         verbose_name = _('Product')
         verbose_name_plural = _('Products')
 
+    def has_image(self):
+        return self.image != ''
+
+    has_image.boolean = True
+    has_image.short_name = _('Has image')
+
     def __str__(self):
         return self.name

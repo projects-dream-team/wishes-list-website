@@ -6,12 +6,18 @@ from .models import *
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'date', 'owner', 'is_past')
+    list_filter = ('date', 'owner',)
+    search_fields = ('name', 'owner')
+
 
 @admin.register(EventInvitedFriends)
 class EventInvitedAdmin(admin.ModelAdmin):
     pass
 
+
 @admin.register(Gift)
-class EventAdmin(admin.ModelAdmin):
-    pass
+class GiftAdmin(admin.ModelAdmin):
+    list_display = ('event', 'product', 'is_reserved', 'reservation_date',)
+    list_filter = ('event', 'product', 'reservation_date',)
+    search_fields = ('event', 'product')

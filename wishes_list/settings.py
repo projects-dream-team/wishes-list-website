@@ -51,6 +51,7 @@ WISHES_LIST_APPS =[
     'users',
     'products',
     'wishes',
+    'rest_framework',
 ]
 
 INSTALLED_APPS += WISHES_LIST_APPS

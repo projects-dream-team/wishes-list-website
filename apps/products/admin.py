@@ -7,8 +7,11 @@ from .models import *
 
 @admin.register(Shop)
 class ShopAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ('name',)
+    list_display = ('name', 'url')
+
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ('name',)
+    list_display = ('name', 'shop', 'url', 'has_image')
