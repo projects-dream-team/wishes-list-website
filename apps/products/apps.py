@@ -4,4 +4,5 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class ProductsConfig(AppConfig):
-    name = _('products')
+    name = 'products'
+    verbose_name = _('products')

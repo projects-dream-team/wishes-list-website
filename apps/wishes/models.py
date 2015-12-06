@@ -42,7 +42,7 @@ class Gift(BaseModel):
 
 
 @python_2_unicode_compatible
-class EventInventedFriends(BaseModel):
+class EventInvitedFriends(BaseModel):
     event = models.ForeignKey(Event, verbose_name=_('Event'), related_name='events_invitations')
     friend = models.ForeignKey(User, verbose_name=_('Friend'), related_name="events_invitations")
 

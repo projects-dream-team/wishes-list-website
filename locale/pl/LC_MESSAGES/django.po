@@ -1,0 +1,217 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-12-05 14:27+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#: apps/core/apps.py:7
+msgid "core"
+msgstr ""
+
+#: apps/core/models.py:13 apps/users/models.py:119
+msgid "Created at"
+msgstr "Utworzono"
+
+#: apps/core/models.py:14
+msgid "Modified"
+msgstr "Zmodyfikowano"
+
+#: apps/core/models.py:15 apps/users/models.py:118
+msgid "Is active"
+msgstr "Jest aktywne"
+
+#: apps/products/apps.py:8
+msgid "products"
+msgstr "produkty"
+
+#: apps/products/models.py:11 apps/products/models.py:23
+#: apps/wishes/models.py:14
+msgid "Name"
+msgstr "Nazwa"
+
+#: apps/products/models.py:12 apps/products/models.py:24
+#: apps/wishes/models.py:17
+msgid "Url"
+msgstr "Adres url"
+
+#: apps/products/models.py:15 apps/products/models.py:26
+msgid "Shop"
+msgstr "Sklep"
+
+#: apps/products/models.py:16
+msgid "Shops"
+msgstr "Sklepy"
+
+#: apps/products/models.py:25
+msgid "Image"
+msgstr "Plik graficzny"
+
+#: apps/products/models.py:29 apps/wishes/models.py:29
+msgid "Product"
+msgstr "Product"
+
+#: apps/products/models.py:30
+msgid "Products"
+msgstr "Products"
+
+#: apps/users/admin.py:18
+msgid "Permissions"
+msgstr "Dostępy"
+
+#: apps/users/admin.py:19
+msgid "Important dates"
+msgstr "Ważne daty"
+
+#: apps/users/apps.py:8
+msgid "users"
+msgstr "użytkownicy"
+
+#: apps/users/models.py:17
+msgid "Users must have an email address"
+msgstr "Użytkownik musi wpisać adres email"
+
+#: apps/users/models.py:35
+msgid "Nick"
+msgstr "Nick"
+
+#: apps/users/models.py:36
+msgid "Email"
+msgstr "Email"
+
+#: apps/users/models.py:37
+msgid "Is admin"
+msgstr "Jest adminem?"
+
+#: apps/users/models.py:38
+msgid "Mobile app id"
+msgstr "Id aplikacji mobilnej"
+
+#: apps/users/models.py:45 apps/users/models.py:114
+msgid "User"
+msgstr "Użytkownik"
+
+#: apps/users/models.py:46
+msgid "Users"
+msgstr "Użytkownicy"
+
+#: apps/users/models.py:110
+msgid "Account registration"
+msgstr "Rejestracja konta"
+
+#: apps/users/models.py:111
+msgid "Password recovery"
+msgstr "Resetowanie hasła"
+
+#: apps/users/models.py:115
+msgid "Code"
+msgstr "Kod"
+
+#: apps/users/models.py:116
+msgid "Type"
+msgstr "Typ"
+
+#: apps/users/models.py:117
+msgid "Additional data"
+msgstr "Dodatkowe dane"
+
+#: apps/users/models.py:120
+msgid "Used at"
+msgstr "Użyty dnia"
+
+#: apps/users/models.py:125
+msgid "User's code"
+msgstr "Kod użytkownika"
+
+#: apps/users/models.py:126
+msgid "User's codes"
+msgstr "Kody użytkownika"
+
+#: apps/users/models.py:133
+msgid "Creator"
+msgstr "Twórca"
+
+#: apps/users/models.py:134 apps/wishes/models.py:47
+msgid "Friend"
+msgstr "Znajomy"
+
+#: apps/users/models.py:137
+msgid "Friendship"
+msgstr "Znajomość"
+
+#: apps/users/models.py:138
+msgid "Friendships"
+msgstr "Znajomości"
+
+#: apps/users/models.py:142
+#, python-format
+msgid "%(creator)s has added %(friend)s to firends."
+msgstr "%(creator)s dodał do znajomych użytkownika %(friend)s."
+
+#: apps/wishes/apps.py:8
+msgid "wishes"
+msgstr "lista prezentów"
+
+#: apps/wishes/models.py:15
+msgid "Date"
+msgstr "Data"
+
+#: apps/wishes/models.py:16
+msgid "Owner"
+msgstr "Właściciel"
+
+#: apps/wishes/models.py:20 apps/wishes/models.py:30 apps/wishes/models.py:46
+msgid "Event"
+msgstr "Wydarzenie"
+
+#: apps/wishes/models.py:21
+msgid "Events"
+msgstr "Wydarzenia"
+
+#: apps/wishes/models.py:31
+msgid "Reservation date"
+msgstr "Data rezerwacji"
+
+#: apps/wishes/models.py:32
+msgid "Reserved by"
+msgstr "Zarezerwowane przez"
+
+#: apps/wishes/models.py:33
+msgid "Reserved by anonymous"
+msgstr "Zarezerwowane przez anonimową osobę"
+
+#: apps/wishes/models.py:36
+msgid "Gift"
+msgstr "Prezent"
+
+#: apps/wishes/models.py:37
+msgid "Gifts"
+msgstr "Prezenty"
+
+#: apps/wishes/models.py:40
+#, python-format
+msgid "Product %(prduct_name)s is on %(event)s wishes list."
+msgstr ""
+"Produkt %(prduct_name)s jest na liście prezentów wydarzenia: %(event)s."
+
+#: apps/wishes/models.py:50
+msgid "Event - invented friend"
+msgstr "Wydarzenie - zaproszony znajomy"
+
+#: apps/wishes/models.py:51
+msgid "Event - invented friends"
+msgstr "Wydarzenie - zaproszeni znajomi"

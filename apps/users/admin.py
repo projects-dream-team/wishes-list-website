@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-from users.models import User
+from users.models import User, Friendship
 from django.utils.translation import ugettext_lazy as _
 
 @admin.register(User)
@@ -32,3 +32,7 @@ class UserAdmin(UserAdmin):
     def get_readonly_fields(self, request, obj=None):
         fields = tuple(super(UserAdmin, self).get_readonly_fields(request, obj))
         return fields
+
+@admin.register(Friendship)
+class FriendshipAdmin(admin.ModelAdmin):
+    pass
