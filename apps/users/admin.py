@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from users.forms import UserChangeForm, UserCreationForm
 from users.models import User, Friendship
 from django.utils.translation import ugettext_lazy as _
 
@@ -14,7 +14,7 @@ class UserAdmin(UserAdmin):
     list_display = ('nick', 'email', 'is_active', 'is_admin')
     list_filter = ('is_admin', 'is_active')
     fieldsets = (
-        (None, {'fields': ('nick', 'email', 'mobile_app_uuid')}),
+        (None, {'fields': ('nick', 'email', 'password', 'mobile_app_uuid')}),
         (_('Permissions'), {'fields': ('is_admin', 'is_active')}),
         (_('Important dates'), {'fields': ('last_login', )})
     )

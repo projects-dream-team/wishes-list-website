@@ -14,9 +14,28 @@ Including another URLconf
     2. Import the include() function: from django.conf.urls import url, include
     3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import url
+from django.conf import settings
+from django.conf.urls import url, patterns, include
 from django.contrib import admin
+from rest_framework import routers
+from users.viewsets import *
+from wishes.viewsets import *
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'friendship', FrendshipViewSet)
+router.register(r'event', EventViewSet)
+router.register(r'gifts', GiftViewSet)
+router.register(r'ivited_friends', EventInvitedViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api/', include(router.urls)),
 ]
+
+
+
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}))
