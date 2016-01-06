@@ -5,4 +5,4 @@ from django.utils.translation import ugettext_lazy as _
 
 class WishesConfig(AppConfig):
     name = 'wishes'
-    verbose_name = _('wishes')
+    verbose_name = _('Wishes')
