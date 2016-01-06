@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from products.models import Product
+
 
 def home(request):
-    return render(request, 'home/home.html')
+    products = Product.objects.active()[:6]
+    return render(request, 'home/home.html',{'products':products})
