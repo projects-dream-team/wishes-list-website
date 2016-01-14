@@ -21,6 +21,10 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from rest_framework import routers
 from users.viewsets import *
 from wishes.viewsets import *
+from products.viewsets import *
+from . import settings
+admin.site.site_header = settings.ADMIN_SITE_HEADER
+
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -28,11 +32,14 @@ router.register(r'friendship', FrendshipViewSet)
 router.register(r'event', EventViewSet)
 router.register(r'gifts', GiftViewSet)
 router.register(r'ivited_friends', EventInvitedViewSet)
+router.register(r'shops', ShopViewSet)
+router.register(r'product', ProductViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
     url(r'^', include("core.urls", namespace='core')),
+    url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
 ]
 
 
