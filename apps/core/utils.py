@@ -72,3 +72,11 @@ def _slug_strip(value, separator='-'):
             re_sep = re.escape(separator)
         value = re.sub(r'^%s+|%s+$' % (re_sep, re_sep), '', value)
     return value
+
+
+def upload_file_name(instance, filename):
+    try:
+        user_id = instance.owner.id
+    except AttributeError:
+        user_id = 'public'
+    return '/'.join([instance.__class__.__name__, user_id, filename])

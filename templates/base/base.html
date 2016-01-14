@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" ng-app="commonApp">
 
 <head>
 
@@ -44,6 +44,30 @@
 {% block footer %}
     {% include "base/footer.html" %}
 {% endblock %}
+		<script>
+
+			var STATIC_URL = '{{ STATIC_URL|escapejs }}';
+
+			var MEDIA_URL  = '{{ MEDIA_URL|escapejs }}';
+
+
+			function staticContent(path) {
+
+				return STATIC_URL + path;
+
+			}
+			function staticAngular(path) {
+
+				return STATIC_URL + '/lib/app/' + path + '?' +Date.now();
+
+			}
+			function static_media(path) {
+
+				return MEDIA_URL + path;
+
+			}
+
+		</script>
     <!-- jQuery -->
     <script src="{% static "js/jquery.js"%}"></script>
 
@@ -61,6 +85,18 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="{% static "js/agency.js"%}"></script>
+
+    <!-- Angular -->
+    <script src="{% static "lib/angular/angular.min.js"%}"></script>
+    <script src="{% static "lib/angular/angular-resource.min.js"%}"></script>
+    <script src="{% static "lib/angular/angular-touch.min.js"%}"></script>
+    <script src="{% static "lib/angular/angular-locale/angular-locale_pl-pl.js"%}"></script>
+    <script src="{% static "lib/angular-ui/ui-bootstrap-custom-tpls-0.14.3.js"%}"></script>
+    <script src="{% static "lib/app/common/commonApp.js"%}"></script>
+    <script src="{% static "lib/app/common/controllers/BaseModalCtrl.js"%}"></script>
+    <script src="{% static "lib/app/common/controllers/ModalCtrl.js"%}"></script>
+    <script src="{% static "lib/app/common/controllers/AuthCtrl.js"%}"></script>
+    <script src="{% static "lib/app/common/services/apiService.js"%}"></script>
 
 </body>
 

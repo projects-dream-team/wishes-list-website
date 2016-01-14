@@ -1,7 +1,14 @@
 Django==1.9
 Pillow==3.0.0
+PyJWT==1.4.0
 argparse==1.2.1
+django-extensions==1.6.1
 djangorestframework==3.3.1
+djangorestframework-jwt==1.7.2
 easy-thumbnails==2.3
+graphviz==0.4.8
 psycopg2==2.6.1
+pydot==1.0.2
+pyparsing==1.5.7
+six==1.10.0
 wsgiref==0.1.2

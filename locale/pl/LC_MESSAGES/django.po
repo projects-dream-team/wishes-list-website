@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-06 19:57+0100\n"
+"POT-Creation-Date: 2016-01-13 20:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,50 +21,87 @@ msgstr ""
 
 #: apps/core/apps.py:7
 msgid "Core"
-msgstr ""
+msgstr "Zarządzanie stroną"
 
-#: apps/core/models.py:13 apps/users/models.py:119
+#: apps/core/models.py:14 apps/users/models.py:119
 msgid "Created at"
 msgstr "Utworzono"
 
-#: apps/core/models.py:14
+#: apps/core/models.py:15
 msgid "Modified"
 msgstr "Zmodyfikowano"
 
-#: apps/core/models.py:15 apps/users/models.py:118
+#: apps/core/models.py:16 apps/users/models.py:118
 msgid "Is active"
 msgstr "Jest aktywne"
 
-#: apps/products/apps.py:8 apps/products/models.py:30
-msgid "Products"
-msgstr "Products"
-
-#: apps/products/models.py:11 apps/products/models.py:23
-#: apps/wishes/models.py:17
+#: apps/core/models.py:25 apps/core/models.py:38 apps/products/models.py:14
+#: apps/products/models.py:26 apps/wishes/models.py:17
 msgid "Name"
 msgstr "Nazwa"
 
-#: apps/products/models.py:12 apps/products/models.py:24
-msgid "Url"
-msgstr "Adres url"
+#: apps/core/models.py:26
+msgid "Description"
+msgstr "Opis"
 
-#: apps/products/models.py:15 apps/products/models.py:26
-msgid "Shop"
-msgstr "Sklep"
-
-#: apps/products/models.py:16
-msgid "Shops"
-msgstr "Sklepy"
-
-#: apps/products/models.py:25
+#: apps/core/models.py:27 apps/products/models.py:28
 msgid "Image"
 msgstr "Plik graficzny"
 
-#: apps/products/models.py:29 apps/wishes/models.py:43
+#: apps/core/models.py:30 apps/core/models.py:31
+msgid "Team member"
+msgstr "Członek ekipy"
+
+#: apps/core/models.py:39 apps/users/models.py:36
+msgid "Email"
+msgstr "Email"
+
+#: apps/core/models.py:40
+msgid "Subject"
+msgstr "Tytuł"
+
+#: apps/core/models.py:41
+msgid "Message"
+msgstr "Wiadomość"
+
+#: apps/core/models.py:44
+msgid "Contact message"
+msgstr "Wiadomość kontaktowa"
+
+#: apps/core/models.py:45
+msgid "Contact messages"
+msgstr "Wiadomości kontaktowe"
+
+#: apps/core/models.py:48
+#, python-format
+msgid "Contact message from %(email)s with subject: %(subject)s."
+msgstr "Wiadomość kontaktowa od %(email)s o tytule: %(subject)s."
+
+#: apps/products/apps.py:8 apps/products/models.py:34
+msgid "Products"
+msgstr "Produkty"
+
+#: apps/products/models.py:15 apps/products/models.py:27
+msgid "Url"
+msgstr "Adres url"
+
+#: apps/products/models.py:18 apps/products/models.py:29
+msgid "Shop"
+msgstr "Sklep"
+
+#: apps/products/models.py:19
+msgid "Shops"
+msgstr "Sklepy"
+
+#: apps/products/models.py:30 apps/wishes/models.py:19
+msgid "Owner"
+msgstr "Właściciel"
+
+#: apps/products/models.py:33 apps/wishes/models.py:43
 msgid "Product"
 msgstr "Product"
 
-#: apps/products/models.py:36
+#: apps/products/models.py:40
 msgid "Has image"
 msgstr "Zawiera plik graficzny"
 
@@ -87,10 +124,6 @@ msgstr "Użytkownik musi wpisać adres email"
 #: apps/users/models.py:35
 msgid "Nick"
 msgstr "Nick"
-
-#: apps/users/models.py:36
-msgid "Email"
-msgstr "Email"
 
 #: apps/users/models.py:37
 msgid "Is admin"
@@ -164,10 +197,6 @@ msgstr "Lista prezentów"
 #: apps/wishes/models.py:18
 msgid "Date"
 msgstr "Data"
-
-#: apps/wishes/models.py:19
-msgid "Owner"
-msgstr "Właściciel"
 
 #: apps/wishes/models.py:20
 msgid "Access url"

@@ -1,6 +1,8 @@
 {% extends "base/base.html" %}
 {% load thumbnail %}
+{% load core_tags %}
 {% block content %}
+{% get_site_settings as settings %}
 <!-- Header -->
     <header>
         <div class="container">
@@ -61,23 +63,33 @@
             </div>
             <div class="row">
                 {% for product in products %}
-                {% if product.image %}
-                <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="#" class="portfolio-link" data-toggle="modal">
+
+                <div class="col-md-3 col-sm-6 portfolio-item">
+                    <a href="#" class="portfolio-link">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content">
                                 <i class="fa fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img src="{% thumbnail product.image 400x289 crop %}" class="img-responsive" alt="">
+                        {% if product.image %}
+                            <img src="{% thumbnail product.image 400x289 crop upscale%}" class="img-responsive" alt="{{ product.image.filename }}">
+                        {% else %}
+                            <img src="{% thumbnail settings.default_product_image 400x289 crop upscale%}" class="img-responsive" alt="{{ settings.default_product_image.filename }}">
+                        {%  endif %}
                     </a>
                     <div class="portfolio-caption">
-                        <h4>{{ product.name }}</h4>
-{#                        <p class="text-muted">Graphic Design</p>#}
+                        <h4>{{ product.name |truncatewords:5 }}</h4>
+
+                            <p class="text-muted">{% if product.description %} {{ product.description |truncatewords:10  }}{% endif %}</p>
+
                     </div>
                 </div>
-                    {%  endif %}
                 {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <a href="catalog/" class="btn btn-xl">Zobacz cały katalog</a>
+                </div>
             </div>
         </div>
     </section>
@@ -238,25 +250,25 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <form name="sentMessage" id="contactForm" novalidate>
+                    <form name="sentMessage" id="contactForm" class="wishes-form" novalidate>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Your Name *" id="name" required data-validation-required-message="Please enter your name.">
+                                    <input type="text" class="form-control" placeholder="Twoje imię *" id="name" required data-validation-required-message="Wpisz swoje imię.">
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" placeholder="Your Email *" id="email" required data-validation-required-message="Please enter your email address.">
+                                    <input type="email" class="form-control" placeholder="Twój Email *" id="email" required data-validation-required-message="Wpisz swój adres email." data-validation-email-message="Niepoprawny adres email">
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="tel" class="form-control" placeholder="Your Phone *" id="phone" required data-validation-required-message="Please enter your phone number.">
+                                    <input type="text" class="form-control" placeholder="Temat *" id="phone" required data-validation-required-message="Wpisz temat wiadomości.">
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <textarea class="form-control" placeholder="Your Message *" id="message" required data-validation-required-message="Please enter a message."></textarea>
+                                    <textarea class="form-control" placeholder="Wiadomość *" id="message" required data-validation-required-message="Wpisz wiadomość."></textarea>
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
