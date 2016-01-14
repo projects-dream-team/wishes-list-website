@@ -1,6 +1,6 @@
 commonApp.controller('authCtrl',
-    ['$rootScope', '$http', '$scope', '$window', 'api',
-    function($rootScope, $http, $scope, $window, api) {
+    ['$rootScope', '$http', '$scope', '$window', 'api', '$uibModalInstance',
+    function($rootScope, $http, $scope, $window, api,$uibModalInstance) {
 
         function add_auth_header(data, headersGetter){
             // as per HTTP authentication spec [1], credentials must be
@@ -15,6 +15,9 @@ commonApp.controller('authCtrl',
         // we tell Django not to [3]. This is a problem as the POST data cannot
         // be sent with the redirect. So we want Angular to not strip the slashes!
 
+          $scope.close = function () {
+            $uibModalInstance.dismiss('cancel');
+          };
         $scope.alerts =[];
         $scope.isLoading=false;
         $scope.closeAlert = function(index) {
