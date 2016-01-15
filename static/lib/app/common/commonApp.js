@@ -4,11 +4,11 @@ var commonApp = angular
     ['ng', 'ngResource', 'ngTouch', 'ui.bootstrap']
 )
     .config([
-        '$interpolateProvider',
+        '$interpolateProvider', '$httpProvider',
         function($interpolateProvider, $httpProvider) {
             $interpolateProvider.startSymbol('{$');
             $interpolateProvider.endSymbol('$}');
             $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
             $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         }
-    ])
+    ]);
