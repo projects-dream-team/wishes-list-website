@@ -33,7 +33,7 @@ class UserManager(BaseManager, BaseUserManager):
 @python_2_unicode_compatible
 class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     nick = models.CharField(_('Nick'), max_length=50, unique=True)
-    email = models.EmailField(_('Email'), max_length=255, unique=True)
+    email = models.EmailField(_('Email'), max_length=50, unique=True)
     is_admin = models.BooleanField(_('Is admin'), default=False)
     mobile_app_uuid = models.UUIDField(_('Mobile app id'), null=True, blank=True)
 

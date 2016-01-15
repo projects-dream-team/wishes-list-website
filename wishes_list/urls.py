@@ -19,6 +19,7 @@ from django.conf.urls import url, patterns, include
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from rest_framework import routers
+from core.viewsets import ContactViewSet
 from users.viewsets import *
 from wishes.viewsets import *
 from products.viewsets import *
@@ -34,12 +35,14 @@ router.register(r'gifts', GiftViewSet)
 router.register(r'ivited_friends', EventInvitedViewSet)
 router.register(r'shops', ShopViewSet)
 router.register(r'product', ProductViewSet)
+router.register(r'contact', ContactViewSet, base_name='contact')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/', include(router.urls)),
+    url(r'^api/', include(router.urls, namespace='api')),
     url(r'^', include("core.urls", namespace='core')),
     url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
+    url(r'^api/auth$', AuthView.as_view(), name='authenticate')
 ]
 
 

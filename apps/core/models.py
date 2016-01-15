@@ -22,7 +22,7 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
-
+@python_2_unicode_compatible
 class TeamMember(BaseModel):
     name = models.CharField(_('Name'), max_length=100)
     description = models.TextField(_('Description'), null=True, blank=True)
@@ -41,6 +41,7 @@ class ContactMessage(BaseModel):
     email = models.EmailField(_('Email'), max_length=100)
     subject = models.CharField(_('Subject'), max_length=100)
     message = models.TextField(_('Message'), validators=[MaxLengthValidator(2000)])
+    read = models.BooleanField(_('Read'), default=False)
 
     class Meta:
         verbose_name = _('Contact message')
