@@ -1,10 +1,119 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "base/base.html" %}
+{% load thumbnail %}
+{% load core_tags %}
+{% block content %}
+{% get_site_settings as settings %}
+<!-- Header -->
+    <header>
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">Warunki korzystania z naszego serwisu</div>
+                <div class="intro-heading">Regulamin</div>
+                <a href="#links" class="page-scroll btn btn-xl"><i class="fa fa-list-ol"></i>
+ Lista zagadnień</a>
+            </div>
+        </div>
+    </header>
+    <section id="links">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Lista zagadnień</h2>
+                    <h3 class="section-subheading text-muted">Jeśli coś jest dla Ciebie niejasne zawsze możesz do nas napisać korzystając z naszego formularza kontaktowego</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul class="terms">
+                        <li>
+                            <a class="page-scroll" href="#section1">
+                                <h3>1. Warunek</h3>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#section2">
+                                <h3>2. Warunek</h3>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#section3">
+                                <h3>3. Warunek</h3>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="section1">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Warunek 1</h2>
+                    <h3 class="section-subheading text-muted">Jakiś fajny podtytuł</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <p>
+                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt pulvinar tempus. Nulla id lacus ornare, gravida dui at, pharetra dui. In euismod, magna ac interdum dictum, felis eros ullamcorper risus, sit amet fringilla turpis augue et nisi. Nullam mattis nulla vitae felis lobortis, ac ultrices quam consequat. Aliquam ut arcu vitae leo consequat ultricies. Praesent pretium elit interdum, rutrum arcu sed, finibus turpis. Integer hendrerit quis sem sed posuere.
 
-</body>
-</html>
+Quisque laoreet velit efficitur venenatis dignissim. Cras justo lectus, condimentum et tempor a, vulputate eu nisl. Nulla a ultricies diam. Nulla elementum urna sit amet aliquam accumsan. Donec et est vitae quam consequat luctus. Quisque vitae lorem a lorem tincidunt viverra sit amet at tortor. Donec bibendum diam aliquet est congue viverra. Duis lobortis molestie euismod. Aliquam ligula dui, varius ut ex nec, venenatis gravida dui.
+
+Donec eu leo gravida, egestas felis a, venenatis nunc. Aenean augue erat, elementum a urna eget, lobortis maximus libero. Nulla et felis non nibh euismod egestas et eget eros. Proin mollis arcu libero, eu bibendum tellus sodales at. Duis ultricies, augue id sodales fringilla, enim massa scelerisque diam, sed fringilla ligula sapien et sem. Vivamus nec sapien elit. Nam pellentesque pellentesque libero non tincidunt. Aliquam eu laoreet orci. Donec nunc quam, molestie sed tempus id, consequat nec leo.
+
+Curabitur hendrerit, quam sit amet pharetra suscipit, risus justo placerat purus, a tincidunt neque turpis a mauris. Pellentesque tristique lorem non dui lobortis facilisis. Fusce lacinia maximus sem ac cursus. Nullam elit nisl, molestie eu lacus at, sagittis sollicitudin nisl. Fusce lacinia tempus sapien eu aliquam. Duis sollicitudin augue sed imperdiet blandit. Nunc porta nunc rhoncus purus convallis, et vestibulum purus tincidunt. Aenean ex eros, ultricies sed porttitor fringilla, ultrices id nunc.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="section2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Warunek 2</h2>
+                    <h3 class="section-subheading text-muted">Jakiś fajny podtytuł</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <p>
+                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt pulvinar tempus. Nulla id lacus ornare, gravida dui at, pharetra dui. In euismod, magna ac interdum dictum, felis eros ullamcorper risus, sit amet fringilla turpis augue et nisi. Nullam mattis nulla vitae felis lobortis, ac ultrices quam consequat. Aliquam ut arcu vitae leo consequat ultricies. Praesent pretium elit interdum, rutrum arcu sed, finibus turpis. Integer hendrerit quis sem sed posuere.
+
+Quisque laoreet velit efficitur venenatis dignissim. Cras justo lectus, condimentum et tempor a, vulputate eu nisl. Nulla a ultricies diam. Nulla elementum urna sit amet aliquam accumsan. Donec et est vitae quam consequat luctus. Quisque vitae lorem a lorem tincidunt viverra sit amet at tortor. Donec bibendum diam aliquet est congue viverra. Duis lobortis molestie euismod. Aliquam ligula dui, varius ut ex nec, venenatis gravida dui.
+
+Donec eu leo gravida, egestas felis a, venenatis nunc. Aenean augue erat, elementum a urna eget, lobortis maximus libero. Nulla et felis non nibh euismod egestas et eget eros. Proin mollis arcu libero, eu bibendum tellus sodales at. Duis ultricies, augue id sodales fringilla, enim massa scelerisque diam, sed fringilla ligula sapien et sem. Vivamus nec sapien elit. Nam pellentesque pellentesque libero non tincidunt. Aliquam eu laoreet orci. Donec nunc quam, molestie sed tempus id, consequat nec leo.
+
+Curabitur hendrerit, quam sit amet pharetra suscipit, risus justo placerat purus, a tincidunt neque turpis a mauris. Pellentesque tristique lorem non dui lobortis facilisis. Fusce lacinia maximus sem ac cursus. Nullam elit nisl, molestie eu lacus at, sagittis sollicitudin nisl. Fusce lacinia tempus sapien eu aliquam. Duis sollicitudin augue sed imperdiet blandit. Nunc porta nunc rhoncus purus convallis, et vestibulum purus tincidunt. Aenean ex eros, ultricies sed porttitor fringilla, ultrices id nunc.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+        <section id="section3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Warunek 3</h2>
+                    <h3 class="section-subheading text-muted">Jakiś fajny podtytuł</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <p>
+                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt pulvinar tempus. Nulla id lacus ornare, gravida dui at, pharetra dui. In euismod, magna ac interdum dictum, felis eros ullamcorper risus, sit amet fringilla turpis augue et nisi. Nullam mattis nulla vitae felis lobortis, ac ultrices quam consequat. Aliquam ut arcu vitae leo consequat ultricies. Praesent pretium elit interdum, rutrum arcu sed, finibus turpis. Integer hendrerit quis sem sed posuere.
+
+Quisque laoreet velit efficitur venenatis dignissim. Cras justo lectus, condimentum et tempor a, vulputate eu nisl. Nulla a ultricies diam. Nulla elementum urna sit amet aliquam accumsan. Donec et est vitae quam consequat luctus. Quisque vitae lorem a lorem tincidunt viverra sit amet at tortor. Donec bibendum diam aliquet est congue viverra. Duis lobortis molestie euismod. Aliquam ligula dui, varius ut ex nec, venenatis gravida dui.
+
+Donec eu leo gravida, egestas felis a, venenatis nunc. Aenean augue erat, elementum a urna eget, lobortis maximus libero. Nulla et felis non nibh euismod egestas et eget eros. Proin mollis arcu libero, eu bibendum tellus sodales at. Duis ultricies, augue id sodales fringilla, enim massa scelerisque diam, sed fringilla ligula sapien et sem. Vivamus nec sapien elit. Nam pellentesque pellentesque libero non tincidunt. Aliquam eu laoreet orci. Donec nunc quam, molestie sed tempus id, consequat nec leo.
+
+Curabitur hendrerit, quam sit amet pharetra suscipit, risus justo placerat purus, a tincidunt neque turpis a mauris. Pellentesque tristique lorem non dui lobortis facilisis. Fusce lacinia maximus sem ac cursus. Nullam elit nisl, molestie eu lacus at, sagittis sollicitudin nisl. Fusce lacinia tempus sapien eu aliquam. Duis sollicitudin augue sed imperdiet blandit. Nunc porta nunc rhoncus purus convallis, et vestibulum purus tincidunt. Aenean ex eros, ultricies sed porttitor fringilla, ultrices id nunc.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <a href="#links" class="go-up page-scroll btn btn-primary" data-spy="affix" data-offset-top="1000"><i class="fa fa-chevron-up fa-3x"></i>
+</a>
+{% endblock %}
