@@ -14,8 +14,9 @@
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="ModalCtrl">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
                 <ul class="nav navbar-nav navbar-right">
+                    {% if not partial_navbar %}
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
@@ -34,9 +35,20 @@
                     <li>
                         <a class="page-scroll" href="#contact">Kontakt</a>
                     </li>
-                    <li>
-                        <a class="" href="#" ng-click="showModal('common/partials/login_modal',{controller:'authCtrl'})"><i class="fa fa-user"></i> Zaloguj</a>
-                    </li>
+                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                        <li>
+                            <a class="" href="#" ng-click=""><i class="fa fa-th-list"></i> Moje listy</a>
+                        </li>
+                        <li ng-controller="authCtrl">
+                            <a class="" href="#" ng-click="logout()"><i class="fa fa-power-off"></i> Wyloguj</a>
+                        </li>
+                    {% else %}
+                        <li ng-controller="ModalCtrl">
+                            <a class="" href="#" ng-click="showModal('common/partials/login_modal',{controller:'BaseModalCtrl'})"><i class="fa fa-user"></i> Zaloguj</a>
+                        </li>
+
+                    {% endif %}
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

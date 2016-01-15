@@ -10,32 +10,53 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12">
-                <div class="modal-body">
+                <div class="modal-body" ng-controller="authCtrl">
                     <!-- Project Details Go Here -->
                     <h2>Zaloguj się</h2>
-                    <form name="sentMessage" id="loginForm" class="wishes-form" novalidate>
-                        <div class="row">
+                    <form name="loginForm" id="loginForm" class="wishes-form" novalidate ng-init="initForm('#loginForm','')">
+                        <div class="row" ng-show="!isLoading">
+                            <div ng-show="!success">
+                                <div class="col-xs-12 text-center text-danger">
+                                    <i class="fa fa-exclamation-triangle fa-3x"></i>
+                                </div>
+                                <div class="col-xs-12 text-center text-danger">
+                                    <h4 ng-bind="message"></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="isLoading">
+                            <div class="col-xs-12 text-center">
+                                <i class="fa fa-spinner fa-spin fa-5x"></i>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="!isLoading">
+
+
                             <div class="col-md-8 col-md-offset-2">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Twoje imię *" id="name" required data-validation-required-message="Wpisz swoje imię.">
-                                    <p class="help-block text-danger"></p>
+                                    <input type="email" ng-model="formData.email" class="form-control" maxlength="50" placeholder="Twój Email *" id="email" required data-validation-required-message="Wpisz swój adres email." data-validation-email-message="Niepoprawny adres email">
+                                    <p class="help-block text-danger text-left"></p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" placeholder="Twój Email *" id="email" required data-validation-required-message="Wpisz swój adres email." data-validation-email-message="Niepoprawny adres email">
-                                    <p class="help-block text-danger"></p>
+                                    <input type="password" ng-model="formData.password" class="form-control" maxlength="50" placeholder="Twoje hasło *" id="password" required data-validation-required-message="Wpisz swoje hasło.">
+                                    <p class="help-block text-danger text-left"></p>
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Temat *" id="phone" required data-validation-required-message="Wpisz temat wiadomości.">
-                                    <p class="help-block text-danger"></p>
-                                </div>
+
                             </div>
                             <div class="clearfix"></div>
                             <div class="col-lg-12 text-center">
                                 <div id="success"></div>
-                                <button type="submit" class="btn btn-xl">Wyślij wiadomość</button>
+                                <button type="submit" class="btn btn-xl">Zaloguj się</button>
                             </div>
                         </div>
                     </form>
+                    <div class="col-lg-12 text-center">
+                        <br/>
+                        <br/>
+                    </div>
+                    <div class="col-lg-12 text-center" ng-controller="ModalCtrl">
+                        Nie masz konta? <a href="#" ng-click="close();showModal('common/partials/register_modal',{controller:'BaseModalCtrl'})"><i class="fa fa-user-plus"></i> Zarejestruj się</a>
+                    </div>
                 </div>
             </div>
         </div>

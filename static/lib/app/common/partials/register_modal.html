@@ -1,30 +1,113 @@
-
-<div class="modal-content">
-    <div class="close-modal" data-dismiss="modal">
+    <div class="close-modal" ng-click="close()">
         <div class="lr">
             <div class="rl">
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <div class="modal-body">
+            <div class="col-xs-12">
+                <div class="modal-body" ng-controller="FormCtrl">
                     <!-- Project Details Go Here -->
-                    <h2>Project Name</h2>
-                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                    <img class="img-responsive img-centered" src="img/portfolio/roundicons-free.png" alt="">
-                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                    <p>
-                        <strong>Want these icons in this portfolio item sample?</strong>You can download 60 of them for free, courtesy of <a href="https://getdpd.com/cart/hoplink/18076?referrer=bvbo4kax5k8ogc">RoundIcons.com</a>, or you can purchase the 1500 icon set <a href="https://getdpd.com/cart/hoplink/18076?referrer=bvbo4kax5k8ogc">here</a>.</p>
-                    <ul class="list-inline">
-                        <li>Date: July 2014</li>
-                        <li>Client: Round Icons</li>
-                        <li>Category: Graphic Design</li>
-                    </ul>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
+                    <h2>Zarejestruj się</h2>
+                    <form name="registerForm" id="registerForm" class="wishes-form" novalidate ng-init="initForm('#registerForm','/api/user_register/')">
+                        <div class="row" ng-show="!isLoading&&formSubmitted">
+                            <div ng-show="!success">
+                                <div class="col-xs-12 text-center text-danger">
+                                    <i class="fa fa-exclamation-triangle fa-3x"></i>
+                                </div>
+                                <div class="col-xs-12 text-center text-danger">
+                                    <h4 ng-bind="message"></h4>
+                                    <div ng-show="!message">
+                                        Coś poszło nie tak :(, skontaktuj się z administratorem.
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="success">
+                                <div class="col-xs-12 text-center text-success">
+                                    <i class="fa fa-check fa-5x"></i>
+                                </div>
+                                <div class="col-xs-12 text-center text-success">
+                                    <h4>Rejestracja przebiegła pomyślnie, kliknij teraz w link aktywacyjny który przesłaliśmy na Twój adres email</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="isLoading">
+                            <div class="col-xs-12 text-center">
+                                <i class="fa fa-spinner fa-spin fa-5x"></i>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="!isLoading&&!formSubmitted">
+
+
+                            <div class="col-md-8 col-md-offset-2">
+                                <div class="form-group">
+                                    <input type="text" ng-model="formData.nick" class="form-control"
+                                           maxlength="50"
+                                           placeholder="Twój Nick *"
+                                           id="nick"
+                                           required
+                                           data-validation-ajax-ajax="/api/validators/nick"
+                                           data-validation-required-message="Wpisz swój nick."
+                                           data-validation-ajax-message="Nick jest nieprawidłowy"
+                                            >
+                                    <p class="help-block text-danger text-left"></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" ng-model="formData.email" class="form-control"
+                                           maxlength="50"
+                                           placeholder="Twój Email *"
+                                           id="email"
+                                           name="email"
+                                           required
+                                           data-validation-ajax-ajax="/api/validators/email"
+                                           data-validation-required-message="Wpisz swój adres email."
+                                           data-validation-email-message="Niepoprawny adres email">
+                                    <p class="help-block text-danger text-left"></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" ng-model="formData.password" class="form-control"
+                                           maxlength="50"
+                                           placeholder="Twoje hasło *"
+                                           id="password"
+                                           name="password"
+                                           data-validation-ajax-ajax="/api/validators/password"
+                                           required data-validation-required-message="Wpisz swoje hasło."
+                                            >
+                                    <p class="help-block text-danger text-left"></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" ng-model="formData.passwordConfirm" class="form-control"
+                                           name="passwordConfirm"
+                                           maxlength="50"
+                                           placeholder="Powtórz hasło hasło *"
+                                           id="passwordConfirm"
+                                           required
+                                           data-validation-match-match="password"
+                                           data-validation-required-message="Powtórz swoje hasło."
+                                           data-validation-match-message="Hasła nie są zgodne"
+                                            >
+                                    <p class="help-block text-danger text-left"></p>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-lg-12 text-center" ng-show="!isLoading&&!formSubmitted">
+                                <div id="success"></div>
+                                <button type="submit" class="btn btn-xl">Zarejestruj się</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="col-lg-12 text-center">
+                        <br/>
+                        <br/>
+                    </div>
+                    <div class="col-lg-12 text-center" ng-controller="ModalCtrl" ng-show="!isLoading&&!formSubmitted">
+                        Rejestracja oznacza akceptację <a href="#" >regulaminu.</a>
+                    </div>
+                    <div class="col-lg-12 text-center" ng-controller="ModalCtrl" ng-show="!isLoading&&!formSubmitted">
+                        Masz już konto? <a href="#" ng-click="close();showModal('common/partials/login_modal',{controller:'BaseModalCtrl'})"><i class="fa fa-user-plus"></i> Zaloguj się</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

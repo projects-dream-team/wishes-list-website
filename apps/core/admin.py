@@ -15,3 +15,9 @@ class SettingsAdmin(admin.ModelAdmin):
         obj, created = model.objects.get_or_create(id=1)
         id = str(obj.id)
         return super(SettingsAdmin, self).change_view(request, id)
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    search_fields = ('name','email','subject',)
+    list_display = ('email','subject','read')
+    list_filter = ('read',)

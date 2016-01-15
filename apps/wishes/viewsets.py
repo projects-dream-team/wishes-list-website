@@ -9,15 +9,18 @@ from .serializers import *
 
 
 class EventViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = Event.objects.active()
     serializer_class = EventSerializer
 
 
 class GiftViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = Gift.objects.active()
     serializer_class = GiftSerializer
 
 
 class EventInvitedViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = EventInvitedFriends.objects.active()
     serializer_class = EventInvitedFriendsSerializer

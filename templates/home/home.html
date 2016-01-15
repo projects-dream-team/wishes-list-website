@@ -250,33 +250,87 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <form name="sentMessage" id="contactForm" class="wishes-form" novalidate>
-                        <div class="row">
+                    <form name="sentMessage" id="contactForm" class="wishes-form" novalidate ng-controller="FormCtrl" ng-init="initForm('#contactForm','{% url 'api:contact-list' %}')">
+                        <div class="row" ng-show="!isLoading&&!formSubmitted">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Twoje imię *" id="name" required data-validation-required-message="Wpisz swoje imię.">
+                                    <input type="text" class="form-control"
+                                           ng-model="formData.name"
+                                           placeholder="Twoje imię *"
+                                           id="name"
+                                           maxlength="100"
+                                           required data-validation-required-message="Wpisz swoje imię.">
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" placeholder="Twój Email *" id="email" required data-validation-required-message="Wpisz swój adres email." data-validation-email-message="Niepoprawny adres email">
+                                    <input type="email" class="form-control"
+                                           ng-model="formData.email"
+                                           placeholder="Twój Email *"
+                                           id="email"
+                                           maxlength="100"
+                                           required data-validation-required-message="Wpisz swój adres email."
+                                           data-validation-email-message="Niepoprawny adres email"
+                                            >
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Temat *" id="phone" required data-validation-required-message="Wpisz temat wiadomości.">
+                                    <input type="text" class="form-control"
+                                           ng-model="formData.subject"
+                                           placeholder="Temat *"
+                                           id="subject"
+                                           maxlength="100"
+                                           required data-validation-required-message="Wpisz temat wiadomości."
+                                            >
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <textarea class="form-control" placeholder="Wiadomość *" id="message" required data-validation-required-message="Wpisz wiadomość."></textarea>
+                                    <textarea class="form-control"
+                                              ng-model="formData.message"
+                                              placeholder="Wiadomość *"
+                                              id="message"
+                                              required data-validation-required-message="Wpisz wiadomość."
+                                              maxlength="2000"
+                                            >
+
+                                    </textarea>
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                             <div class="col-lg-12 text-center">
                                 <div id="success"></div>
-                                <button type="submit" class="btn btn-xl">Wyślij wiadomość</button>
+                                <button type="submit" class="btn btn-xl" >Wyślij wiadomość</button>
                             </div>
+                        </div>
+                        <div class="row" ng-show="isLoading">
+                            <div class="col-xs-12 text-center">
+                                <i class="fa fa-spinner fa-spin fa-5x"></i>
+                            </div>
+
+                        </div>
+                        <div class="row" ng-show="formSubmitted&&!isLoading">
+                            <div ng-show="success">
+                                <div class="col-xs-12 text-center text-success">
+                                    <i class="fa fa-check fa-5x"></i>
+                                </div>
+                                <div class="col-xs-12 text-center text-success">
+                                    <h2>Twoja wiadomość została wysłana</h2>
+                                </div>
+                            </div>
+                            <div ng-show="!success">
+                                <div class="col-xs-12 text-center text-danger">
+                                    <i class="fa fa-exclamation-triangle fa-5x"></i>
+                                </div>
+                                <div class="col-xs-12 text-center text-danger">
+                                    <h2>Nasz server email chwilowo nie odpowiada, spróbuj ponownie później.</h2>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 text-center text-success">
+                                <a href="#contact" class="btn btn-xl button" ng-click="$event.preventDefault();formSubmitted=!formSubmitted">Odśwież formularz kontaktowy</a>
+                            </div>
+
                         </div>
                     </form>
                 </div>

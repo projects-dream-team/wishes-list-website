@@ -1,0 +1,16 @@
+{% extends "base/base.html" %}
+{% load thumbnail %}
+{% load core_tags %}
+{% block content %}
+{% get_site_settings as settings %}
+<!-- Header -->
+    <header>
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">Strona o podanym adresie nie istnieje!</div>
+                <div class="intro-heading"><i class="fa fa-exclamation"></i> 404</div>
+                <a href="{% url "core:home" %}" class="page-scroll btn btn-xl">Powrót na stronę główną</a>
+            </div>
+        </div>
+    </header>
+{% endblock %}

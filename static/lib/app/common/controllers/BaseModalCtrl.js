@@ -1,7 +1,5 @@
-commonApp.controller('BaseModalCtrl', [ '$scope', 'ModalService',
-  function ($scope, ModalService, additionalData) {
-
-  $scope.additionalData = additionalData;
+commonApp.controller('BaseModalCtrl', [ '$scope', '$uibModalInstance',
+  function ($scope,  $uibModalInstance) {
 
   $scope.ok = function () {
     $uibModalInstance.close($scope.selected.item);

@@ -28,7 +28,7 @@ ALLOWED_HOSTS = []
 
 
 ADMINS = (
-    ('jrybak', 'jacek.rybak0d@gmail.com'),
+    ('jrybak', 'jacek.rybak0@gmail.com'),
     ('muchnast', 'mmarekk991@gmail.com'),
     ('mmatyja', 'marlenamatyja89@gmail.com'),
 )
@@ -135,7 +135,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
@@ -180,6 +180,7 @@ EMAIL_PORT = 587
 EMAIL_FROM = 'projects.dream.team@gmail.com'
 EMAIL_HOST_USER = 'projects.dream.team@gmail.com'
 EMAIL_HOST_PASSWORD = 'WiaderekNieOgarnia'
+EMAIL_SUBJECT_PREFIX = "WishesList"
 
 # Custom settings
 try:

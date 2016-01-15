@@ -9,11 +9,13 @@ from .serializers import *
 
 
 class ShopViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = Shop.objects.active()
     serializer_class = ShopSerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = Product.objects.active()
     serializer_class = ProductSerializer
 

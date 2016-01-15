@@ -1,6 +1,10 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django import forms
+from django.contrib.auth import password_validation
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from users.models import User
+from django.utils.translation import ugettext_lazy as _
 
 
 class UserCreationForm(forms.ModelForm):
@@ -39,3 +43,36 @@ class UserChangeForm(forms.ModelForm):
 
     def clean_password(self):
         return self.initial["password"]
+
+
+class NickForm(forms.ModelForm):
+    nick = forms.CharField(error_messages={'unique': _('Given nick is already registered')})
+
+    class Meta:
+        model = User
+        fields = (
+            'nick',
+        )
+
+
+class PasswordForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = (
+            'password',
+        )
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        password_validation.validate_password(password)
+        return password
+
+
+class EmailForm(forms.ModelForm):
+    email = forms.EmailField(error_messages={'unique': _('Given email is already registered')})
+
+    class Meta:
+        model = User
+        fields = (
+            'email',
+        )
