@@ -4,8 +4,16 @@ from django.utils.translation import ugettext_lazy as _
 
 from datetime import datetime
 from django.shortcuts import render, get_object_or_404
+from core.decorators import anonymous_required
 from users.models import UserCode
 
+@anonymous_required
+def login(request):
+    return render(request, 'users/login.html')
+
+@anonymous_required
+def register(request):
+    return render(request, 'users/register.html')
 
 def activate(request, code):
     code = get_object_or_404(UserCode, code=code)
