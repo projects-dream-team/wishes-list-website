@@ -16,6 +16,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
                 <ul class="nav navbar-nav navbar-right">
+                    {% if not partial_navbar %}
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
@@ -34,6 +35,7 @@
                     <li>
                         <a class="page-scroll" href="#contact">Kontakt</a>
                     </li>
+                    {% endif %}
                     {% if request.user.is_authenticated %}
                         <li>
                             <a class="" href="#" ng-click=""><i class="fa fa-th-list"></i> Moje listy</a>

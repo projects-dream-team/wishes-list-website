@@ -36,13 +36,18 @@ router.register(r'ivited_friends', EventInvitedViewSet)
 router.register(r'shops', ShopViewSet)
 router.register(r'product', ProductViewSet)
 router.register(r'contact', ContactViewSet, base_name='contact')
+router.register(r'user_register', UserRegisterViewSet, base_name='register')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls, namespace='api')),
-    url(r'^', include("core.urls", namespace='core')),
     url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
-    url(r'^api/auth$', AuthView.as_view(), name='authenticate')
+    url(r'^api/auth$', AuthView.as_view(), name='authenticate'),
+    url(r'^api/validators/nick$', ValidateNickView.as_view(), name='validate_nick'),
+    url(r'^api/validators/password$', ValidatePasswordView.as_view(), name='validate_password'),
+    url(r'^api/validators/email$', ValidateEmailView.as_view(), name='validate_email'),
+    url(r'^', include("core.urls", namespace='core')),
+    url(r'^users/', include("users.urls", namespace='users')),
 ]
 
 

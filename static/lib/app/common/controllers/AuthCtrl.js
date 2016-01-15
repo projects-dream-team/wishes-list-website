@@ -26,25 +26,6 @@ commonApp.controller('authCtrl',
             };
         };
 
-        $scope.login = function(){
-            $scope.showMessage = false;
-            $scope.alerts = [];
-            $scope.isLoading=true;
-
-                api.auth.login($scope.getCredentials()).
-                $promise.
-                then(function(data){
-                    $window.location.href = "/";
-                }).
-                catch(function(data){
-                    $scope.isLoading=false;
-                    $scope.formData.email = '';
-                    $scope.formData.password = '';
-                    $scope.message=data.data.detail;
-                });
-        };
-
-
         //logout user
         $scope.logout = function(){
             api.auth.logout(function(){

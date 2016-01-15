@@ -1,3 +1,28 @@
-from django.shortcuts import render
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+from django.utils.translation import ugettext_lazy as _
 
-# Create your views here.
+from datetime import datetime
+from django.shortcuts import render, get_object_or_404
+from users.models import UserCode
+
+
+def activate(request, code):
+    code = get_object_or_404(UserCode, code=code)
+    context = {}
+    # Code has been found and it's active
+    context['partial_navbar'] = True
+    if not code is None and code.is_active:
+        if code.user is None:
+            context['message'] = unicode(_('This email address is not existing in our system.'))
+        else:
+            context['message'] = unicode(_('User has been activated. You can log in now.'))
+            code.user.is_active = True
+            code.user.save()
+            code.is_active = False
+            code.used_at = datetime.now()
+            code.save()
+            return render(request, 'users/activate.html', context)
+    else:
+        context['message'] = unicode(_('Code has been expired, or has been used before.'))
+    return render(request, 'users/activate.html', context)

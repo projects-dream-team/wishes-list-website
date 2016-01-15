@@ -37,10 +37,10 @@ commonApp.controller('FormCtrl', [
                     $scope.isLoading = false;
                 }).error(function (err, message) {
                     $scope.isLoading = false;
-                    $scope.message = '';
+                    $scope.message = err.detail;
                     $scope.success = false;
                     console.log(err);
                 })
-        }
+        };
     }
 ]);

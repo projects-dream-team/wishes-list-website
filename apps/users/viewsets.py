@@ -7,9 +7,11 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import *
 from rest_framework.views import APIView
 from core.authentications import QuietBasicAuthentication
+from core.exceptions import EmailServiceUnavailable
 from .models import *
 from .serializers import *
 from django.contrib.auth import login, logout
+from users.forms import NickForm, PasswordForm, EmailForm
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -33,9 +35,42 @@ class AuthView(APIView):
     authentication_classes = (QuietBasicAuthentication,)
 
     def post(self, request, *args, **kwargs):
+        print request.user
         login(request, request.user)
         return Response(UserSerializer(request.user).data)
 
     def delete(self, request, *args, **kwargs):
         logout(request)
         return Response({})
+
+
+class ValidateNickView(APIView):
+    def post(self, request, *args, **kwargs):
+        data = request.data.get('value')
+        form = NickForm(data={"nick": data})
+        valid = form.is_valid()
+
+        return create_validation_response(data, valid, form.errors.get('nick'))
+
+
+class ValidateEmailView(APIView):
+    def post(self, request, *args, **kwargs):
+        print request.data
+        data = request.data.get('value')
+        form = EmailForm(data={"email": data})
+        valid = form.is_valid()
+
+        return create_validation_response(data, valid, form.errors.get('email'))
+
+
+class ValidatePasswordView(APIView):
+    def post(self, request, *args, **kwargs):
+        data = request.data.get('value')
+        form = PasswordForm(data={"password": data})
+        valid = form.is_valid()
+
+        return create_validation_response(data, valid, form.errors.get('password'))
+
+
+def create_validation_response(value, valid, message):
+    return Response({"value": value, "valid": valid, "message": message})

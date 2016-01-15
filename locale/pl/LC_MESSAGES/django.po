@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-13 20:23+0100\n"
+"POT-Creation-Date: 2016-01-15 17:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,85 +23,109 @@ msgstr ""
 msgid "Core"
 msgstr "Zarządzanie stroną"
 
-#: apps/core/models.py:14 apps/users/models.py:119
+#: apps/core/exceptions.py:8
+msgid "Email service temporarily unavailable, try again later."
+msgstr "Nasz serwer email nie odpowiada, skontaktuj się z administratorem wysyłając email na adres projects.dream.team@gmail.com"
+
+#: apps/core/models.py:16 apps/users/models.py:119
 msgid "Created at"
 msgstr "Utworzono"
 
-#: apps/core/models.py:15
+#: apps/core/models.py:17
 msgid "Modified"
 msgstr "Zmodyfikowano"
 
-#: apps/core/models.py:16 apps/users/models.py:118
+#: apps/core/models.py:18 apps/users/models.py:118
 msgid "Is active"
 msgstr "Jest aktywne"
 
-#: apps/core/models.py:25 apps/core/models.py:38 apps/products/models.py:14
-#: apps/products/models.py:26 apps/wishes/models.py:17
+#: apps/core/models.py:27 apps/core/models.py:40 apps/products/models.py:15
+#: apps/products/models.py:33 apps/wishes/models.py:17
 msgid "Name"
 msgstr "Nazwa"
 
-#: apps/core/models.py:26
+#: apps/core/models.py:28 apps/products/models.py:35
 msgid "Description"
 msgstr "Opis"
 
-#: apps/core/models.py:27 apps/products/models.py:28
+#: apps/core/models.py:29 apps/core/models.py:63 apps/products/models.py:36
 msgid "Image"
 msgstr "Plik graficzny"
 
-#: apps/core/models.py:30 apps/core/models.py:31
+#: apps/core/models.py:32 apps/core/models.py:33
 msgid "Team member"
 msgstr "Członek ekipy"
 
-#: apps/core/models.py:39 apps/users/models.py:36
+#: apps/core/models.py:41 apps/users/models.py:36
 msgid "Email"
 msgstr "Email"
 
-#: apps/core/models.py:40
+#: apps/core/models.py:42
 msgid "Subject"
 msgstr "Tytuł"
 
-#: apps/core/models.py:41
+#: apps/core/models.py:43
 msgid "Message"
 msgstr "Wiadomość"
 
 #: apps/core/models.py:44
+msgid "Read"
+msgstr "Przeczytane?"
+
+#: apps/core/models.py:47
 msgid "Contact message"
 msgstr "Wiadomość kontaktowa"
 
-#: apps/core/models.py:45
+#: apps/core/models.py:48
 msgid "Contact messages"
 msgstr "Wiadomości kontaktowe"
 
-#: apps/core/models.py:48
+#: apps/core/models.py:51
 #, python-format
 msgid "Contact message from %(email)s with subject: %(subject)s."
 msgstr "Wiadomość kontaktowa od %(email)s o tytule: %(subject)s."
 
-#: apps/products/apps.py:8 apps/products/models.py:34
+#: apps/core/models.py:64
+msgid "Facebook app id"
+msgstr "Id aplikacji facebook"
+
+#: apps/core/models.py:64
+msgid "This field is required for facebook integration"
+msgstr "To pole jest wymagane do integracji z facebook"
+
+#: apps/core/models.py:69 apps/core/models.py:70
+msgid "Site settings"
+msgstr "Ustawienia globalne strony"
+
+#: apps/core/models.py:73
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: apps/products/apps.py:8 apps/products/models.py:44
 msgid "Products"
 msgstr "Produkty"
 
-#: apps/products/models.py:15 apps/products/models.py:27
+#: apps/products/models.py:16 apps/products/models.py:34
 msgid "Url"
 msgstr "Adres url"
 
-#: apps/products/models.py:18 apps/products/models.py:29
+#: apps/products/models.py:19 apps/products/models.py:37
 msgid "Shop"
 msgstr "Sklep"
 
-#: apps/products/models.py:19
+#: apps/products/models.py:20
 msgid "Shops"
 msgstr "Sklepy"
 
-#: apps/products/models.py:30 apps/wishes/models.py:19
+#: apps/products/models.py:38 apps/wishes/models.py:19
 msgid "Owner"
 msgstr "Właściciel"
 
-#: apps/products/models.py:33 apps/wishes/models.py:43
+#: apps/products/models.py:43 apps/wishes/models.py:43
 msgid "Product"
 msgstr "Product"
 
-#: apps/products/models.py:40
+#: apps/products/models.py:50
 msgid "Has image"
 msgstr "Zawiera plik graficzny"
 
@@ -116,6 +140,14 @@ msgstr "Ważne daty"
 #: apps/users/apps.py:8 apps/users/models.py:46
 msgid "Users"
 msgstr "Użytkownicy"
+
+#: apps/users/forms.py:49
+msgid "Given nick is already registered"
+msgstr "Podany nick jest już zajęty."
+
+#: apps/users/forms.py:72
+msgid "Given email is already registered"
+msgstr "Podany email jest już zajęty."
 
 #: apps/users/models.py:17
 msgid "Users must have an email address"
@@ -137,7 +169,7 @@ msgstr "Id aplikacji mobilnej"
 msgid "User"
 msgstr "Użytkownik"
 
-#: apps/users/models.py:110
+#: apps/users/models.py:110 apps/users/serializers.py:26
 msgid "Account registration"
 msgstr "Rejestracja konta"
 
@@ -189,6 +221,18 @@ msgstr "Znajomości"
 #, python-format
 msgid "%(creator)s has added %(friend)s to firends."
 msgstr "%(creator)s dodał do znajomych użytkownika %(friend)s."
+
+#: apps/users/views.py:17
+msgid "This email address is not existing in our system."
+msgstr "Ten adres email nie istnieje w naszym systemie"
+
+#: apps/users/views.py:19
+msgid "User has been activated. You can log in now."
+msgstr "Użytkownik został aktywowany, możesz się teraz zalogować"
+
+#: apps/users/views.py:27
+msgid "Code has been expired, or has been used before."
+msgstr "Kod wygasł lub został już użyty."
 
 #: apps/wishes/apps.py:8
 msgid "Wishes"
