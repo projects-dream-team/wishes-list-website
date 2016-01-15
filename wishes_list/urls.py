@@ -48,6 +48,7 @@ urlpatterns = [
     url(r'^api/validators/email$', ValidateEmailView.as_view(), name='validate_email'),
     url(r'^', include("core.urls", namespace='core')),
     url(r'^users/', include("users.urls", namespace='users')),
+    url(r'^wishes/', include("wishes.urls", namespace='wishes')),
 ]
 
 

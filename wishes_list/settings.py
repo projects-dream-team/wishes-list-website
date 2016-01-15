@@ -32,7 +32,7 @@ ADMINS = (
     ('muchnast', 'mmarekk991@gmail.com'),
     ('mmatyja', 'marlenamatyja89@gmail.com'),
 )
-
+LOGIN_REDIRECT_URL='/'
 ADMIN_SITE_HEADER = "WishesList - administracja"
 SITE_ID = 1
 

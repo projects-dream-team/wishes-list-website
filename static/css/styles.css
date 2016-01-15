@@ -739,3 +739,6 @@ img::-moz-selection {
 body {
   webkit-tap-highlight-color: #fed136;
 }
+.no-bottom-padding {
+  padding-bottom: 0px !important;
+}
