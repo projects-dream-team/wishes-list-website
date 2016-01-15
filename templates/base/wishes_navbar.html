@@ -20,17 +20,19 @@
                         <a href="{% url "core:home" %}#page-top"></a>
                     </li>
                     {% if request.user.is_authenticated %}
+                        {% url 'users:my_profile' as my_profile %}
+                        {% url 'wishes:my_lists' as my_lists %}
                         <li ng-controller="ModalCtrl">
                             <a class="" href="#" ng-click="showModal('common/partials/login_modal',{controller:'BaseModalCtrl'})"><i class="fa fa-gift"></i> Produkty z katalogu</a>
                         </li>
-                        <li ng-controller="ModalCtrl">
-                            <a class="" href="#" ng-click="showModal('common/partials/login_modal',{controller:'BaseModalCtrl'})"><i class="fa fa-user"></i> Mój profil</a>
+                        <li class="{% if request.get_full_path == my_profile %}active{% endif %}">
+                            <a class="" href="{{ my_profile }}"><i class="fa fa-user"></i> Mój profil</a>
                         </li>
                         <li ng-controller="ModalCtrl">
                             <a class="" href="#" ng-click="showModal('common/partials/login_modal',{controller:'BaseModalCtrl'})"><i class="fa fa-users "></i> Znajomi</a>
                         </li>
-                        <li>
-                            <a class="" href="#" ng-click=""><i class="fa fa-th-list"></i> Moje listy</a>
+                        <li class="{% if request.get_full_path == my_lists %}active{% endif %}">
+                            <a class="" href="{{ my_lists }}" ><i class="fa fa-th-list"></i> Moje listy</a>
                         </li>
                         <li ng-controller="authCtrl">
                             <a class="" href="#" ng-click="logout()"><i class="fa fa-power-off"></i> Wyloguj</a>

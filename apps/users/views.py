@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext_lazy as _
 
 from datetime import datetime
@@ -34,3 +35,8 @@ def activate(request, code):
     else:
         context['message'] = unicode(_('Code has been expired, or has been used before.'))
     return render(request, 'users/activate.html', context)
+
+@login_required
+def my_profile(request):
+    user = request.user
+    return render(request, 'users/my_profile.html', {'user': user})

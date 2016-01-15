@@ -742,3 +742,30 @@ body {
 .no-bottom-padding {
   padding-bottom: 0px !important;
 }
+.icon-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.icon-container i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
+.terms {
+  list-style: none;
+}
+.terms li a {
+  font-size: 20px;
+}
+.go-up {
+  right: 20px;
+  bottom: 20px;
+}
+.go-up.affix {
+  display: block;
+}
