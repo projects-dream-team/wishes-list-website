@@ -20,6 +20,7 @@
 
     <!-- Custom Fonts -->
     <link href="{% static "lib/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" %}" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin-ext' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Kaushan+Script&subset=latin-ext' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700,700italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
@@ -78,7 +79,18 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="{% static "js/classie.js" %}"></script>
     <script src="{% static "js/cbpAnimatedHeader.js"%}"></script>
+    <script src="{% static "lib/moment/min/moment-with-locales.min.js"%}"></script>
+    <script src="{% static "lib/moment-timezone/builds/moment-timezone-with-data-2010-2020.min.js"%}"></script>
+    <script src="{% static "lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"%}"></script>
 
+    <script type="text/javascript">
+        $(function () {
+            $('.has-datepicker').datetimepicker({
+                language: 'pl',
+                useCurrent: false
+            });
+        });
+    </script>
     <!-- Contact Form JavaScript -->
     <script src="{% static "js/jqBootstrapValidation.js"%}"></script>
 {#    <script src="{% static "js/contact_me.js"%}"></script>#}
@@ -97,7 +109,11 @@
     <script src="{% static "lib/app/common/controllers/ModalCtrl.js"%}"></script>
     <script src="{% static "lib/app/common/controllers/AuthCtrl.js"%}"></script>
     <script src="{% static "lib/app/common/controllers/FormCtrl.js"%}"></script>
+    <script src="{% static "lib/app/common/controllers/EventController.js"%}"></script>
     <script src="{% static "lib/app/common/services/apiService.js"%}"></script>
+    <script src="{% static "lib/app/common/services/CurrentUserService.js"%}"></script>
+    <script src="{% static "lib/app/common/services/DateFormatService.js"%}"></script>
+    <script src="{% static "lib/app/common/directives/DateTimePicker.js"%}"></script>
 
 </body>
 
