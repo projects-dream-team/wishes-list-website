@@ -1,23 +1,35 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from rest_framework import viewsets, status
-from rest_framework.mixins import CreateModelMixin
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, UpdateModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import *
 from rest_framework.views import APIView
+from rest_framework.viewsets import GenericViewSet
 from core.authentications import QuietBasicAuthentication
 from core.exceptions import EmailServiceUnavailable
+from core.permissions import IsOwnerOrReadOnly
 from .models import *
 from .serializers import *
 from django.contrib.auth import login, logout
 from users.forms import NickForm, PasswordForm, EmailForm
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+class UserViewSet(RetrieveModelMixin,
+                  UpdateModelMixin,
+                  ListModelMixin,
+                  GenericViewSet):
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
     queryset = User.objects.active()
     serializer_class = UserSerializer
+
+
+class CurrentUserViewSet(RetrieveModelMixin, GenericViewSet):
+    queryset = User.objects.active()
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        return self.request.user
 
 
 class FrendshipViewSet(viewsets.ModelViewSet):

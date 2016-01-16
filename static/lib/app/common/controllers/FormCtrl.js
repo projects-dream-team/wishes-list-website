@@ -1,18 +1,18 @@
 commonApp.controller('FormCtrl', [
-    '$scope', '$window', '$http', '$controller',
-    function($scope, $window, $http, $controller) {
+    '$scope', '$window', '$http', '$controller', 'DateFormatService',
+    function($scope, $window, $http, $controller, DateFormatService) {
         $scope.success = true;
         $scope.isLoading = false;
         $scope.formSubmitted = false;
 
         $scope.initForm = function(formID,apiURL){
-            console.log(formID+' input,'+formID+' textarea');
-            console.log($(formID+' input,'+formID+' textarea'));
+            //console.log(formID+' input,'+formID+' textarea');
+            //console.log($(formID+' input,'+formID+' textarea'));
             $(formID+' input,'+formID+' textarea').jqBootstrapValidation({
                 preventSubmit: true,
                 submitError: function($form, event, errors) {
                     // additional error messages or events
-                    console.log(error);
+                    console.log(errors);
                 },
                 submitSuccess: function($form, event) {
                     event.preventDefault(); // prevent default submit behaviour

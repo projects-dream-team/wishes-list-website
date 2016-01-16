@@ -9,18 +9,17 @@
 {% get_site_settings as settings %}
     <header>
         <div class="container">
-            <div class="intro-text no-bottom-padding">
+            <div class="intro-text " ng-controller="ModalCtrl">
+                <div class="intro-heading">Zarządzaj swoimi listami</div>
+                <a href="#" ng-click="showModal('common/partials/new_list_modal',{controller:'BaseModalCtrl'})" class="btn btn-xl"><i class="fa fa-plus"></i> Dodaj nową</a>
+                <div class="intro-lead-in"></div>
+                <div class="intro-lead-in">lub</div>
+                <a href="#myLists" class="page-scroll btn btn-xl"><i class="fa fa-chevron-down"></i> Zobacz istniejące</a>
             </div>
         </div>
     </header>
     <section id="myLists" class="bg-light-gray">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Moje listy</h2>
-                    <h3 class="section-subheading text-muted">Zestawienie wszystkich Twoich list życzeń.</h3>
-                </div>
-            </div>
             <div class="container">
                 {% for event in events %}
 
@@ -42,7 +41,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    <a href="catalog/" class="btn btn-xl">Zobacz cały katalog</a>
+                    <a href="#" class="btn btn-xl">Wczytaj więcej</a>
                 </div>
             </div>
         </div>
