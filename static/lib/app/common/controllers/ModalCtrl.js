@@ -17,6 +17,7 @@ commonApp.controller('ModalCtrl', [
                 size: params.size,
                 link: params.link
             });
+            console.log(params.additionalData);
             modalInstance.extData = params.additionalData;
             modalInstance.result.then(function (data) {
                 if(data!=undefined){
