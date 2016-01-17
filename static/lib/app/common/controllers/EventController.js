@@ -30,8 +30,6 @@ commonApp.controller('EventCtrl',
 
 
         $scope.submit = function(apiUrl) {
-            $scope.initForm('#eventForm','/api/event/');
-            return false;
             $('.has-datepicker').trigger('dp.change');
             $scope.formData.date = DateFormatService.formatDate($scope.date);
             console.log($scope.formData);

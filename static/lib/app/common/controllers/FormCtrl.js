@@ -4,10 +4,11 @@ commonApp.controller('FormCtrl', [
         $scope.success = true;
         $scope.isLoading = false;
         $scope.formSubmitted = false;
-
-        $scope.initForm = function(formID,apiURL){
+        $scope.additionalData;
+        $scope.initForm = function(formID,apiURL,additionalData){
             //console.log(formID+' input,'+formID+' textarea');
             //console.log($(formID+' input,'+formID+' textarea'));
+            $scope.additionalData = additionalData;
             $(formID+' input,'+formID+' textarea').jqBootstrapValidation({
                 preventSubmit: true,
                 submitError: function($form, event, errors) {
