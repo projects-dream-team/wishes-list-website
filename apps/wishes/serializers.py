@@ -7,8 +7,8 @@ from products.serializers import ProductSerializer
 
 
 class GiftSerializer(serializers.ModelSerializer):
-    product_name = serializers.CharField(source='product.name', read_only=True)
-    product_url = serializers.CharField(source='product.url', read_only=True)
+    product_name = serializers.CharField(source='product.name',required=False)
+    product_url = serializers.CharField(source='product.url',required=False)
     product_id = serializers.CharField(source='product.id', read_only=True)
 
     class Meta:
