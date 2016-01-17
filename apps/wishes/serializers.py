@@ -25,16 +25,16 @@ class EventSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         test = validated_data.get('wishes_set',[])
         print validated_data.get('gifts',[])
-        print validated_data.get('wishes_set',[])
+        print validated_data.get('wishes_set',[])[0]
         gifts = validated_data.pop('wishes_set',[])
         # event = super(EventSerializer, self).create(validated_data)
         event = Event.objects.create(**validated_data)
         event.save()
-        print event
-        for gift in gifts:
+        for prod in gifts:
+            gift = prod.get('product')
             gift_id = gift.get('id', None)
-            gift_name = gift.get('product_name', 'nowy produkt')
-            gift_url = gift.get('product_url', '')
+            gift_name = gift.get('name', 'nowy produkt')
+            gift_url = gift.get('url', '')
             read_only = gift.get('external', True)
             if gift_id is None:
                 product = Product.objects.create(id=gift_id)
@@ -57,10 +57,11 @@ class EventSerializer(serializers.ModelSerializer):
         event.date = validated_data.get('date', None)
         event.save()
         print event
-        for gift in gifts:
+        for prod in gifts:
+            gift = prod.get('product')
             gift_id = gift.get('id', None)
-            gift_name = gift.get('product_name', 'nowy produkt')
-            gift_url = gift.get('product_url', '')
+            gift_name = gift.get('name', 'nowy produkt')
+            gift_url = gift.get('url', '')
             read_only = gift.get('external', True)
             if gift_id is None:
                 product = Product.objects.create(id=gift_id)
