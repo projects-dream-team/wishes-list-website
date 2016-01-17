@@ -47,7 +47,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'easy_thumbnails',
     'django_extensions',
-    'rest_framework_jwt'
+    'rest_framework_jwt',
+    'django_filters',
+    'crispy_forms'
+
 ]
 
 WISHES_LIST_APPS =[

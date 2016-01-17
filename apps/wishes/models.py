@@ -2,15 +2,14 @@
 from __future__ import unicode_literals
 import hashlib
 import random
+import datetime
 from django.conf import settings
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from django.db import models
-import itertools
 from core.models import BaseModel
-from core.utils import unique_slugify
 from products.models import Product
 from users.models import User
 from core.models import BaseManager
@@ -30,12 +29,19 @@ def generate_slug():
     return code
 
 
+class EventManager(BaseManager):
+    def not_past(self):
+        return self.active().filter(date__gte=datetime.date.today())
+
+
 @python_2_unicode_compatible
 class Event(BaseModel):
     name = models.CharField(_('Name'), max_length=50)
     date = models.DateTimeField(_('Date'))
     owner = models.ForeignKey(User, verbose_name=_('Owner'), related_name='wishes_lists')
     slug = models.SlugField(_('Access url'), null=True, blank=True, unique=True)
+
+    objects = EventManager()
 
     class Meta:
         verbose_name = _('Event')
@@ -46,7 +52,7 @@ class Event(BaseModel):
         super(Event, self).save(**kwargs)
 
     def is_past(self):
-        return not self.date >= timezone.now()
+        return self.date < timezone.now()
 
     is_past.boolean = True
     is_past.short_name = _('Is past')
