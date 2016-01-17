@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import hashlib
+import random
+from django.conf import settings
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
@@ -10,6 +13,21 @@ from core.models import BaseModel
 from core.utils import unique_slugify
 from products.models import Product
 from users.models import User
+from core.models import BaseManager
+
+
+def generate_slug():
+    exists = True
+    code = ''
+    while exists:
+        hash = hashlib.md5()
+        from datetime import datetime
+
+        now = datetime.now()
+        hash.update(str(random.random()) + now.strftime('%Y-%m-%d %H:%M') + settings.SECRET_KEY)
+        code = hash.hexdigest()
+        exists = len(Event.objects.filter(slug=code)) > 0
+    return code
 
 
 @python_2_unicode_compatible
@@ -24,8 +42,7 @@ class Event(BaseModel):
         verbose_name_plural = _('Events')
 
     def save(self, **kwargs):
-        slug_str = "%s %s" % (self.name, self.date)
-        unique_slugify(self, slug_str)
+        self.slug = generate_slug()
         super(Event, self).save(**kwargs)
 
     def is_past(self):
@@ -76,4 +93,4 @@ class EventInvitedFriends(BaseModel):
 
     def __str__(self):
         return unicode(_('%(friend)s has been invited to %(event)s event.') % {'friend': self.friend.nick,
-                                                                                     'event': self.event.name})
+                                                                               'event': self.event.name})

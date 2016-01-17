@@ -19,6 +19,10 @@ commonApp.directive('dDatepicker', function($timeout, $parse) {
                             $scope.$apply(function() {
                                 $scope.ngModel = event.target.value;
                             });
+                    }).on('dp.update', function(event) {
+                            $scope.$apply(function() {
+                                $scope.ngModel = event.target.value;
+                            });
                     });
                 });
             }

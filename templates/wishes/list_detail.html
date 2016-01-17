@@ -1,0 +1,64 @@
+{% extends "base/base.html" %}
+{% load thumbnail %}
+{% load core_tags %}
+
+{% block navbar %}
+    {% include "base/wishes_navbar.html" %}
+{% endblock %}
+{% block content %}
+{% get_site_settings as settings %}
+    <header>
+        <div class="container">
+            <div class="intro-text " ng-controller="ModalCtrl">
+                <div class="intro-lead-in"><i class="fa fa-clock-o"></i> {{ event.date|date:"d E Y H:i"}}</div>
+                <div class="intro-heading"> {{ event.name }}</div>
+                <a href="#gifts" class="page-scroll btn btn-xl"><i class="fa fa-chevron-down"></i> Zobacz listę prezentów</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="gifts" class="bg-light-gray">
+        <div class="container">
+            <div class="container">
+                {% for gift in gifts %}
+
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4>{{ gift.product.name }}</h4>
+                        </div>
+
+                        {% if owner %}
+                            <div class="col-md-4 text-center">
+                                {% if gift.reservation_date %}
+                                <div class="text-success">
+                                    <i class="fa fa-check"></i> Zarezerwowany dnia: {{ gift.reservation_date|date:"SHORT_DATE_FORMAT" }}
+                                </div>
+                                {% else %}
+                                <div class="text-warning">
+                                    <i class="fa fa-minus"></i> Oczekujący na rezerwację
+                                </div>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                        <div class="col-md-4 actions">
+                            <div class="btn-group" role="group" aria-label="...">
+                              <button type="button" class="btn btn-default">Rezerwuj</button>
+                              <button type="button" class="btn btn-default">Middle</button>
+                              <button type="button" class="btn btn-default">Right</button>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <hr class="custom"/>
+                    </div>
+
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <a href="#" class="btn btn-xl">Wczytaj więcej</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
