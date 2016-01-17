@@ -4,13 +4,15 @@
         </div>
     </div>
 </div>
+
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-12">
-            <div class="modal-body" ng-controller="EventCtrl" ng-init="initData(additionalData.idToEdit)">
+        <div class="col-xs-12" ng-init="info=additionalData;">
+            <div class="modal-body" ng-controller="EventCtrl" ng-init="initData(info.idToEdit)">
                 <!-- Project Details Go Here -->
-                <h2>Nowa lista</h2>
 
+                <h2 ng-show="!toEdit">Nowa lista</h2>
+                <h2 ng-show="toEdit">Edycja listy</h2>
                 <form name="eventForm" id="eventForm" class="wishes-form" ng-init="initForm('#eventForm','/api/event/')" novalidate>
                     <div class="row" ng-show="!isLoading&&formSubmitted||loadFailed">
                         <div ng-show="!success">
@@ -30,7 +32,8 @@
                                 <i class="fa fa-check fa-5x"></i>
                             </div>
                             <div class="col-xs-12 text-center text-success">
-                                <h4>Lista utworzona, włącz jej edycję aby dodać do niej prezenty</h4>
+                                    <h4 ng-show="!toEdit">Lista utworzona, włącz jej edycję aby dodać do niej prezenty</h4>
+                                    <h4 ng-show="toEdit">Zmiany zostały zapisane</h4>
                             </div>
                         </div>
                     </div>
@@ -79,12 +82,12 @@
                             <div class="row" ng-repeat="gift in formData.gifts track by $index">
                                 <div class="col-xs-10">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" ng-keypress="showFormData()" ng-keydown="initForm('#eventForm','/api/event/')"
+                                        <input type="text" class="form-control" ng-keypress="showFormData()" ng-keydown="initValidation('#eventForm')"
                                                maxlength="50"
                                                placeholder="Nazwa produktu *"
                                                id="products-name-{$$index$}"
                                                name="name{$$index$}"
-                                               ng-model="formData.gifts[$index].name"
+                                               ng-model="formData.gifts[$index].product_name"
                                                required
                                                data-validation-required-message="Wpisz nazwę produktu."
                                                 >
@@ -93,7 +96,7 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="text" ng-keypress="showFormData()"
-                                               ng-model="formData.gifts[$index].url" class="form-control"
+                                               ng-model="formData.gifts[$index].product_url" class="form-control"
                                                maxlength="50"
                                                placeholder="adres url"
                                                id="products-url-{$$index$}"

@@ -5,7 +5,7 @@ from . models import *
 
 @login_required(login_url='/users/login/')
 def my_lists(request):
-    events = Event.objects.not_past().order_by('-date')
+    events = Event.objects.not_past().order_by('date')
     return render(request, 'wishes/my_lists.html', {"events":events})
 
 def list_detail(request, code):

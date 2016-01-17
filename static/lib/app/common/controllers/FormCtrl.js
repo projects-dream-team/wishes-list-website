@@ -26,6 +26,25 @@ commonApp.controller('FormCtrl', [
             });
         };
 
+        $scope.initValidation = function(formID){
+            //console.log(formID+' input,'+formID+' textarea');
+            //console.log($(formID+' input,'+formID+' textarea'));
+            $(formID+' input,'+formID+' textarea').jqBootstrapValidation({
+                preventSubmit: true,
+                submitError: function($form, event, errors) {
+                    // additional error messages or events
+                    console.log(errors);
+                },
+                submitSuccess: function($form, event) {
+                    event.preventDefault(); // prevent default submit behaviour
+                    // get values from FORM
+                    //$scope.submit(apiURL);
+                },
+                filter: function() {
+                    return $(this).is(":visible");
+                },
+            });
+        };
         $scope.submit = function(apiUrl) {
             $scope.formSubmitted = true;
             $scope.isLoading = true;
