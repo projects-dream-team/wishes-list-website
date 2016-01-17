@@ -12,8 +12,10 @@ commonApp.controller('EventCtrl',
         };
         $scope.loadFailed = false;
         $scope.gatheringData = true;
-        $scope.initData = function(){
-
+        $scope.initData = function(idToEdit){
+            if (idToEdit != undefined){
+                console.log(idToedit)
+            }
             CurrentUserService.getCurrentUser().success(function(data){
                 $scope.user = data;
                 $scope.formData.owner = $scope.user.id;
@@ -48,7 +50,6 @@ commonApp.controller('EventCtrl',
                     console.log(err);
                 })
         };
-
         $scope.addProduct = function(){
             $scope.formData.gifts.push({
                     id: null,

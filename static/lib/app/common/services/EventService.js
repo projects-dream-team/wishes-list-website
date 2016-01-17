@@ -1,8 +1,8 @@
 commonApp.service('EventService', [
     '$http',
     function($http) {
-        this.getItems = function() {
-            return $http.get('');
+        this.deleteEvent = function(id) {
+            return $http.delete('/api/event/'+id+'/');
         };
 
         this.getNextPage = function(url) {

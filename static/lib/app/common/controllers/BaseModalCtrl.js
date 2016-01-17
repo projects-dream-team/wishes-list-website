@@ -1,7 +1,7 @@
 commonApp.controller('BaseModalCtrl', [ '$scope', '$uibModalInstance',
   function ($scope,  $uibModalInstance) {
 
-  $scope.additionalData = $uibModalInstance.additionalData;
+  $scope.additionalData = $uibModalInstance.extData;
 
   $scope.ok = function () {
     $uibModalInstance.close($scope.selected.item);
