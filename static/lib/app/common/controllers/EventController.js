@@ -1,6 +1,6 @@
 commonApp.controller('EventCtrl',
-    ['$rootScope', '$http', '$scope', '$window', '$controller', 'CurrentUserService', 'DateFormatService',
-    function($rootScope, $http, $scope, $window, $controller, CurrentUserService, DateFormatService) {
+    ['$rootScope', '$http', '$scope', '$window', '$controller', 'CurrentUserService', 'DateFormatService', 'EventService',
+    function($rootScope, $http, $scope, $window, $controller, CurrentUserService, DateFormatService, EventService) {
 
         angular.extend(this, $controller('FormCtrl', {$scope: $scope}));
 
@@ -10,33 +10,67 @@ commonApp.controller('EventCtrl',
                     url: "",
                     external: false
         };
+        $scope.user = {};
         $scope.loadFailed = false;
         $scope.gatheringData = true;
+        $scope.toEdit = false;
         $scope.initData = function(idToEdit){
-            if (idToEdit != undefined){
-                console.log(idToedit)
+            if ($scope.info != undefined){
+                $scope.toEdit = true;
+                EventService.getEvent($scope.info.additionalData.idToEdit).success(function(data){
+                    $scope.formData = data;
+                    $scope.formData.gifts = data.gifts;
+                    $scope.user.id = $scope.formData.owner;
+                    $scope.gatheringData = false;
+                }).error(function(error){
+                    $scope.loadFailed = true;
+                });
+            }else{
+                CurrentUserService.getCurrentUser().success(function(data){
+                    $scope.user = data;
+                    $scope.formData.owner = $scope.user.id;
+                    $scope.gatheringData = false;
+                }).error(function(error){
+                    $scope.loadFailed = true;
+                });
+                $scope.formData = {
+                    gifts: [
+                        emptyProduct
+                    ]
+                };
             }
-            CurrentUserService.getCurrentUser().success(function(data){
-                $scope.user = data;
-                $scope.formData.owner = $scope.user.id;
-                $scope.gatheringData = false;
-            }).error(function(error){
-                $scope.loadFailed = true;
-            });
-        };
-        $scope.formData = {
-            gifts: [
-                emptyProduct
-            ]
         };
 
+
+        $scope.setOwner = function (){
+            angular.forEach($scope.formData.gifts, function(gift){
+                gift.owner = $scope.user.id;
+            })
+        };
 
         $scope.submit = function(apiUrl) {
             $('.has-datepicker').trigger('dp.change');
-            $scope.formData.date = DateFormatService.formatDate($scope.date);
-            console.log($scope.formData);
-            $scope.formSubmitted = true;
             $scope.isLoading = true;
+            $scope.formData.date = DateFormatService.formatDate($scope.date);
+            $scope.formSubmitted = true;
+
+
+
+            if ($scope.toEdit) {
+                $http.put(apiUrl+$scope.formData.id+'/', $scope.formData
+                ).success(function (data) {
+                        $scope.formData = {};
+                        $scope.success = true;
+                        $scope.message = data;
+                        $scope.isLoading = false;
+                    }).error(function (err, message) {
+                        $scope.isLoading = false;
+                        $scope.message = err.detail;
+                        $scope.success = false;
+                        console.log(err);
+                    })
+            } else {
+            $scope.setOwner();
             $http.post(apiUrl, $scope.formData
             ).success(function (data) {
                     $scope.formData = {};
@@ -49,6 +83,7 @@ commonApp.controller('EventCtrl',
                     $scope.success = false;
                     console.log(err);
                 })
+            }
         };
         $scope.addProduct = function(){
             $scope.formData.gifts.push({
@@ -66,11 +101,11 @@ commonApp.controller('EventCtrl',
 
         $scope.$watch('formData.gifts.length', function(newValue, oldValue) {
             console.log("gifts changed");
-            $scope.initForm('#eventForm','/api/event/');
+            //$scope.initForm('#eventForm','/api/event/');
         }, true);
 
         $scope.showFormData = function(){
             console.log($scope.formData);
-        }
+        };
 
     }]);
