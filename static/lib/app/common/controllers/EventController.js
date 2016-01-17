@@ -18,7 +18,6 @@ commonApp.controller('EventCtrl',
                 $scope.user = data;
                 $scope.formData.owner = $scope.user.id;
                 $scope.gatheringData = false;
-                console.log(data);
             }).error(function(error){
                 $scope.loadFailed = true;
             });
@@ -31,8 +30,11 @@ commonApp.controller('EventCtrl',
 
 
         $scope.submit = function(apiUrl) {
-            $scope.formData.date = DateFormatService.formatDate($scope.formData.date);
-            console.log(formData);
+            $scope.initForm('#eventForm','/api/event/');
+            return false;
+            $('.has-datepicker').trigger('dp.change');
+            $scope.formData.date = DateFormatService.formatDate($scope.date);
+            console.log($scope.formData);
             $scope.formSubmitted = true;
             $scope.isLoading = true;
             $http.post(apiUrl, $scope.formData
@@ -50,7 +52,12 @@ commonApp.controller('EventCtrl',
         };
 
         $scope.addProduct = function(){
-            $scope.formData.gifts.push(emptyProduct);
+            $scope.formData.gifts.push({
+                    id: null,
+                    name:"",
+                    url: "",
+                    external: false
+        });
 
         };
 
@@ -61,6 +68,10 @@ commonApp.controller('EventCtrl',
         $scope.$watch('formData.gifts.length', function(newValue, oldValue) {
             console.log("gifts changed");
             $scope.initForm('#eventForm','/api/event/');
-        }, true)
+        }, true);
+
+        $scope.showFormData = function(){
+            console.log($scope.formData);
+        }
 
     }]);

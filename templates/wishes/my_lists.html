@@ -24,15 +24,14 @@
                 {% for event in events %}
 
 
-                    <div class="row">
+                    <div class="row border-bottom extra-space bottom">
                         <div class="col-md-8">
-                            <h4>{{ event.name |truncatewords:5 }} dnia: {{ event.date|date:"SHORT_DATE_FORMAT"  }}</h4>
+                            <a href="{% url "wishes:list_detail" event.slug %}"><h4>{{ event.name |truncatewords:5 }}</h4></a>
                         </div>
                         <div class="col-md-4 actions">
-                            <div class="btn-group" role="group" aria-label="...">
-                              <button type="button" class="btn btn-default">Left</button>
-                              <button type="button" class="btn btn-default">Middle</button>
-                              <button type="button" class="btn btn-default">Right</button>
+                            <div class="btn-group pull-right" role="group" aria-label=".">
+                              <button type="button" class="button btn btn-default"><i class="fa fa-edit"></i></button>
+                              <button type="button" class="button btn btn-danger"><i class="fa fa-trash-o"></i></button>
                             </div>
                         </div>
                     </div>

@@ -35,6 +35,7 @@ class EventSerializer(serializers.ModelSerializer):
 
 
 class GiftSerializer(serializers.ModelSerializer):
+    product_name = serializers.CharField(read_only=True,source='product.name')
     class Meta:
         model = Gift
 

@@ -58,7 +58,7 @@
                                 <div class="input-group date">
 
 
-                                    <input type="text" ng-model="formData.date" class="form-control has-datepicker"
+                                    <input type="text" ng-model="date" class="form-control has-datepicker"
                                            maxlength="50"
                                            placeholder="Data wydarzenia *"
                                            id="date"
@@ -76,15 +76,15 @@
                         </div>
                         <div class="col-md-8 col-md-offset-2">
                             <div class="col-xs-12 text-center"><h5>Produkty</h5></div>
-                            <div class="row" ng-repeat="(i, gift) in formData.gifts track by $index">
+                            <div class="row" ng-repeat="gift in formData.gifts track by $index">
                                 <div class="col-xs-10">
                                     <div class="form-group">
-                                        <input type="text" class="form-control"
+                                        <input type="text" class="form-control" ng-keypress="showFormData()"
                                                maxlength="50"
                                                placeholder="Nazwa produktu *"
                                                id="products-name-{$$index$}"
                                                name="name{$$index$}"
-                                               ng-model="formData.gifts[i].name"
+                                               ng-model="formData.gifts[$index].name"
                                                required
                                                data-validation-required-message="Wpisz nazwę produktu."
                                                 >
@@ -92,7 +92,8 @@
                                         <p class="help-block text-danger text-left"></p>
                                     </div>
                                     <div class="form-group">
-                                        <input type="url" ng-model="formData.gifts[i].url" class="form-control"
+                                        <input type="text" ng-keypress="showFormData()"
+                                               ng-model="formData.gifts[$index].url" class="form-control"
                                                maxlength="50"
                                                placeholder="adres url"
                                                id="products-url-{$$index$}"
@@ -103,7 +104,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-2" ng-show="formData.gifts.length >1">
-                                    <button type="button" class="btn btn-xl" ng-click="removeProduct($index)"><i class="fa fa-trash"></i></button>
+                                    <button type="button" class="btn btn-xl" ng-click="removeProduct($index)"><i class="fa fa-trash fa-2x"></i></button>
                                 </div>
                             </div>
                             <div class="col-xs-12 text-center"><button type="button" class="btn btn-xl" ng-click="addProduct()"><i class="fa fa-plus"></i> Dodaj produkt</button></div>
