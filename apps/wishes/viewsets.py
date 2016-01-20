@@ -12,6 +12,8 @@ class EventViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     queryset = Event.objects.active()
     serializer_class = EventSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('owner',)
 
 
 class GiftViewSet(viewsets.ModelViewSet):

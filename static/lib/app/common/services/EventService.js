@@ -8,5 +8,13 @@ commonApp.service('EventService', [
         this.getEvent = function(id) {
             return $http.get('/api/event/'+id+'/');
         };
+
+        this.getAllEvents = function() {
+            return $http.get('/api/event/');
+        };
+
+        this.getEventsForUser = function(id) {
+            return $http.get('/api/event/?owner='+id);
+        };
     }
 ]);

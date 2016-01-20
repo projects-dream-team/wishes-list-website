@@ -101,7 +101,6 @@ commonApp.controller('EventCtrl',
 
         $scope.$watch('formData.gifts.length', function(newValue, oldValue) {
             console.log("gifts changed");
-            //$scope.initForm('#eventForm','/api/event/');
         }, true);
 
         $scope.showFormData = function(){
