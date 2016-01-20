@@ -13,3 +13,14 @@ var commonApp = angular
             $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         }
     ]);
+
+commonApp.filter('isAfter', function(){
+  return function(items, field, isEnabled, dateAfter){
+    if (dateAfter == undefined){
+        dateAfter = Date.now();
+    }
+    return isEnabled? items.filter(function(item){
+      return moment(item[field]).isAfter(dateAfter);
+    }) : items;
+  };
+});

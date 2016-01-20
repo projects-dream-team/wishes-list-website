@@ -7,26 +7,30 @@ from products.serializers import ProductSerializer
 
 
 class GiftSerializer(serializers.ModelSerializer):
-    product_name = serializers.CharField(source='product.name',required=False)
-    product_url = serializers.CharField(source='product.url',required=False)
-    product_id = serializers.CharField(source='product.id', read_only=True)
+    product_name = serializers.CharField(source='product.name', required=False)
+    product_url = serializers.CharField(source='product.url', required=False)
+    product_id = serializers.CharField(source='product.id', required=False)
 
     class Meta:
         model = Gift
-        extra_kwargs = {'id': {'read_only': True},'event': {'read_only': True},'product': {'read_only': True}}
+        extra_kwargs = {'id': {'read_only': True}, 'event': {'read_only': True}, 'product': {'read_only': True}}
 
 
 class EventSerializer(serializers.ModelSerializer):
     gifts = GiftSerializer(many=True, source='wishes_set')
+    full_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Event
 
+    def get_full_url(self, obj):
+        return self.context['request'].build_absolute_uri(obj.url)
+
     def create(self, validated_data):
-        test = validated_data.get('wishes_set',[])
-        print validated_data.get('gifts',[])
-        print validated_data.get('wishes_set',[])[0]
-        gifts = validated_data.pop('wishes_set',[])
+        test = validated_data.get('wishes_set', [])
+        print validated_data.get('gifts', [])
+        print validated_data.get('wishes_set', [])[0]
+        gifts = validated_data.pop('wishes_set', [])
         # event = super(EventSerializer, self).create(validated_data)
         event = Event.objects.create(**validated_data)
         event.save()
@@ -50,7 +54,7 @@ class EventSerializer(serializers.ModelSerializer):
         return event
 
     def update(self, instance, validated_data):
-        gifts = validated_data.pop('wishes_set',[])
+        gifts = validated_data.pop('wishes_set', [])
         event = instance
         # event = super(EventSerializer, self).create(validated_data)
         event.name = validated_data.get('name', None)

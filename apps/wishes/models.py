@@ -4,6 +4,7 @@ import hashlib
 import random
 import datetime
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
@@ -53,9 +54,12 @@ class Event(BaseModel):
 
     def is_past(self):
         return self.date < timezone.now()
-
     is_past.boolean = True
     is_past.short_name = _('Is past')
+
+    @property
+    def url(self):
+        return reverse('wishes:list_detail', kwargs={'code':self.slug})
 
     def __str__(self):
         return self.name

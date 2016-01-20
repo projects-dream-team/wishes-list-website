@@ -18,32 +18,43 @@
             </div>
         </div>
     </header>
-    <section id="myLists" class="bg-light-gray">
+    <section id="myLists" class="bg-light-gray" ng-controller="EventListCtrl">
         <div class="container">
-            <div class="container">
-                {% for event in events %}
+            <div class="container" ng-init="initData({{ request.user.id | escapejs }})">
 
+                    <div class="col-md-6 col-xs-12">
+                        <div class="form-group">
+                            <input type="text" ng-model="search.name" class="form-control"
+                                   maxlength="50" placeholder="Szukaj... " id="email">
 
-                    <div class="row border-bottom extra-space bottom" ng-controller="ModalCtrl">
-                        <div class="col-md-8">
-                            <a href="{% url "wishes:list_detail" event.slug %}"><h4>{{ event.name |truncatewords:5 }}</h4></a>
-                            <h5><i class="fa fa-clock-o"></i> {{ event.date|date:"d E Y H:i"}}</h5>
+                            <p class="help-block text-danger text-left"></p>
                         </div>
-                        <div class="col-md-4 actions">
-                            <div class="btn-group pull-right" role="group" aria-label="." ng-init="info = {idToEdit:{{ event.id }},name:'{{ event.name|escapejs }}'};">
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <div class="btn-group">
+                            <label class="btn btn-success" ng-model="showFuture" uib-btn-radio="true" uncheckable>Nadchodzące</label>
+                            <label class="btn btn-success" ng-model="showFuture" uib-btn-radio="false" uncheckable>Wszystkie</label>
+                        </div>
+                    </div>
+                    <div class="row border-bottom extra-space bottom" ng-repeat="event in filtered = (lists | isAfter:'date':showFuture | filter:search | orderBy: 'date':true) | limitTo: limit as results  track by $index">
+                        <div class="col-md-8">
+                            <a href="{$ event.full_url $}"><h4 ng-bind="event.name"></h4></a>
+                            <h5><i class="fa fa-clock-o"></i> <span ng-bind="event.date | date: 'd MMM yyyy H:mm'"></span></h5>
+                        </div>
+                        <div class="col-md-4 actions" ng-controller="ModalCtrl">
+                            <div class="btn-group pull-right" role="group" aria-label="." ng-init="info = {idToEdit:event.id,name:event.name};">
                               <button type="button" class="button btn btn-default" ng-click="showModal('common/partials/new_list_modal',{size:'lg',controller:'BaseModalCtrl',additionalData:{additionalData:info}})"><i class="fa fa-edit"></i></button>
                               <button type="button" class="button btn btn-danger" ng-click="showModal('common/partials/delete_event_modal',{controller:'DeleteEventCtrl',additionalData:info})"><i class="fa fa-trash-o"></i></button>
                             </div>
                         </div>
                     </div>
-
-                {% endfor %}
             </div>
-            <div class="row">
+            <div id="bottom" class="row" ng-show="filtered.length > results.length ">
                 <div class="col-xs-12 text-center">
-                    <a href="#" class="btn btn-xl">Wczytaj więcej</a>
+                    <a href="#bottom" class="btn btn-xl page-scroll" ng-click="showMore()">Wczytaj więcej</a>
                 </div>
             </div>
         </div>
     </section>
+    <a href="#myLists" class="go-up page-scroll btn btn-primary" data-spy="affix" data-offset-top="800"><i class="fa fa-chevron-up fa-2x"></i></a>
 {% endblock %}
