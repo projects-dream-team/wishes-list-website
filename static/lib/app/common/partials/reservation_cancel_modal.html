@@ -1,0 +1,48 @@
+
+
+
+    <div class="close-modal" ng-click="close()">
+        <div class="lr">
+            <div class="rl">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" ng-controller="ReservationCtrl">
+        <div class="row">
+            <div class="col-xs-12" ng-init="initData()">
+                    <!-- Project Details Go Here -->
+                    <h2>Czy chcesz anulować rezerwację <span ng-bind="formData.product_name"></span> ?</h2>
+                        <div class="row" ng-show="!isLoading&&formSubmitted">
+                            <div ng-show="!success">
+                                <div class="col-xs-12 text-center text-danger">
+                                    <i class="fa fa-exclamation-triangle fa-3x"></i>
+                                </div>
+                                <div class="col-xs-12 text-center text-danger">
+                                    <h4 ng-bind="message"></h4>
+                                    <div ng-show="!message">
+                                        Coś poszło nie tak :(, skontaktuj się z administratorem.
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="success">
+                                <div class="col-xs-12 text-center text-success">
+                                    <i class="fa fa-check fa-5x"></i>
+                                </div>
+                                <div class="col-xs-12 text-center text-success">
+                                    <h4>Rezerwacja anulowana</h4>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="clearfix"></div>
+                            <div class="col-lg-12 text-center">
+                                <div id="success"></div>
+                                <button type="button" ng-click="cancelReservation()"class="btn btn-xl"><i class="fa fa-times"></i> Anuluj rezerwację</button>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
