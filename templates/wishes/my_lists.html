@@ -20,7 +20,7 @@
     </header>
     <section id="myLists" class="bg-light-gray" ng-controller="EventListCtrl">
         <div class="container">
-            <div class="container" ng-init="initData({{ request.user.id | escapejs }})">
+            <div class="container" ng-init="initData({{ request.user.id | escapejs }})" ng-show="!gatheringData">
 
                     <div class="col-md-6 col-xs-12">
                         <div class="form-group">
@@ -36,25 +36,30 @@
                             <label class="btn btn-success" ng-model="showFuture" uib-btn-radio="false" uncheckable>Wszystkie</label>
                         </div>
                     </div>
-                    <div class="row border-bottom extra-space bottom" ng-repeat="event in filtered = (lists | isAfter:'date':showFuture | filter:search | orderBy: 'date':true) | limitTo: limit as results  track by $index">
+                    <div class="row border-bottom extra-space bottom" ng-repeat="event in filtered = (lists | isAfter:'date':showFuture | filter:search | orderBy: '-date':true) | limitTo: limit as results  track by $index">
                         <div class="col-md-8">
                             <a href="{$ event.full_url $}"><h4 ng-bind="event.name"></h4></a>
                             <h5><i class="fa fa-clock-o"></i> <span ng-bind="event.date | date: 'd MMM yyyy H:mm'"></span></h5>
                         </div>
                         <div class="col-md-4 actions" ng-controller="ModalCtrl">
-                            <div class="btn-group pull-right" role="group" aria-label="." ng-init="info = {idToEdit:event.id,name:event.name};">
-                              <button type="button" class="button btn btn-default" ng-click="showModal('common/partials/new_list_modal',{size:'lg',controller:'BaseModalCtrl',additionalData:{additionalData:info}})"><i class="fa fa-edit"></i></button>
-                              <button type="button" class="button btn btn-danger" ng-click="showModal('common/partials/delete_event_modal',{controller:'DeleteEventCtrl',additionalData:info})"><i class="fa fa-trash-o"></i></button>
+                            <div class="btn-group pull-right" role="group" aria-label=".">
+                              <button type="button" class="button btn btn-default" ng-click="showModal('common/partials/new_list_modal',{size:'lg',controller:'BaseModalCtrl',additionalData:{additionalData:{idToEdit:event.id,name:event.name}}})"><i class="fa fa-edit"></i></button>
+                              <button type="button" class="button btn btn-danger" ng-click="showModal('common/partials/delete_event_modal',{controller:'DeleteEventCtrl',additionalData:{idToEdit:event.id,name:event.name}})"><i class="fa fa-trash-o"></i></button>
                             </div>
                         </div>
                     </div>
             </div>
-            <div id="bottom" class="row" ng-show="filtered.length > results.length ">
+            <div id="bottom" class="row" ng-show="filtered.length > results.length&&!gatheringData">
                 <div class="col-xs-12 text-center">
                     <a href="#bottom" class="btn btn-xl page-scroll" ng-click="showMore()">Wczytaj więcej</a>
                 </div>
             </div>
+            <div id="bottom" class="row" ng-show="gatheringData">
+                <div class="col-xs-12 text-center">
+                    <i class="fa fa-spinner fa-spin fa-5x"></i>
+                </div>
+            </div>
         </div>
     </section>
-    <a href="#myLists" class="go-up page-scroll btn btn-primary" data-spy="affix" data-offset-top="800"><i class="fa fa-chevron-up fa-2x"></i></a>
+    <a href="#myLists" class="go-up page-scroll btn btn-primary" data-spy="affix" data-offset-top="1000"><i class="fa fa-chevron-up fa-2x"></i></a>
 {% endblock %}

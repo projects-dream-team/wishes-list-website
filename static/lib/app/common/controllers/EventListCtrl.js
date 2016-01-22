@@ -24,7 +24,7 @@ commonApp.controller('EventListCtrl',
             });
         };
 
-        $scope.$on('list-change', function(data){
+        $scope.$on('event-changed', function(data){
             $scope.loadLists();
         });
 
