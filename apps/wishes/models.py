@@ -49,7 +49,8 @@ class Event(BaseModel):
         verbose_name_plural = _('Events')
 
     def save(self, **kwargs):
-        self.slug = generate_slug()
+        if not self.slug:
+            self.slug = generate_slug()
         super(Event, self).save(**kwargs)
 
     def is_past(self):

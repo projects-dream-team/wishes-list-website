@@ -19,8 +19,8 @@ commonApp.controller('EventCtrl',
                 $scope.toEdit = true;
                 EventService.getEvent($scope.info.additionalData.idToEdit).success(function(data){
                     $scope.formData = data;
-                    $scope.formData.gifts = data.gifts;
                     $scope.user.id = $scope.formData.owner;
+                    $scope.date = DateFormatService.unformatDate($scope.formData.date);
                     $scope.gatheringData = false;
                 }).error(function(error){
                     $scope.loadFailed = true;
@@ -62,6 +62,7 @@ commonApp.controller('EventCtrl',
                         $scope.formData = {};
                         $scope.success = true;
                         $scope.message = data;
+                        $rootScope.$broadcast('event-changed');
                         $scope.isLoading = false;
                     }).error(function (err, message) {
                         $scope.isLoading = false;
@@ -76,6 +77,7 @@ commonApp.controller('EventCtrl',
                     $scope.formData = {};
                     $scope.success = true;
                     $scope.message = data;
+                    $rootScope.$broadcast('event-changed');
                     $scope.isLoading = false;
                 }).error(function (err, message) {
                     $scope.isLoading = false;

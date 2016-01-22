@@ -13,7 +13,7 @@ class GiftSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Gift
-        extra_kwargs = {'id': {'read_only': True}, 'event': {'read_only': True}, 'product': {'read_only': True}}
+        extra_kwargs = {'id': {'required': False}, 'event': {'required': False}, 'product': {'required': False}}
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -27,11 +27,7 @@ class EventSerializer(serializers.ModelSerializer):
         return self.context['request'].build_absolute_uri(obj.url)
 
     def create(self, validated_data):
-        test = validated_data.get('wishes_set', [])
-        print validated_data.get('gifts', [])
-        print validated_data.get('wishes_set', [])[0]
         gifts = validated_data.pop('wishes_set', [])
-        # event = super(EventSerializer, self).create(validated_data)
         event = Event.objects.create(**validated_data)
         event.save()
         for prod in gifts:
@@ -40,15 +36,11 @@ class EventSerializer(serializers.ModelSerializer):
             gift_name = gift.get('name', 'nowy produkt')
             gift_url = gift.get('url', '')
             read_only = gift.get('external', True)
-            if gift_id is None:
-                product = Product.objects.create(id=gift_id)
-                created = True
-            else:
-                created, product = Product.objects.get_or_create(id=gift_id)
-            if created or not read_only:
-                product.name = gift_name
-                product.url = gift_url
-                product.save()
+
+            product, created = Product.objects.get_or_create(name=gift_name, owner=event.owner)
+            product.name = gift_name
+            product.url = gift_url
+            product.save()
             gift = Gift.objects.create(product=product, event=event)
             gift.save()
         return event
@@ -56,27 +48,19 @@ class EventSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         gifts = validated_data.pop('wishes_set', [])
         event = instance
-        # event = super(EventSerializer, self).create(validated_data)
         event.name = validated_data.get('name', None)
         event.date = validated_data.get('date', None)
         event.save()
-        print event
+        event.wishes_set.all().delete()
         for prod in gifts:
-            gift = prod.get('product')
-            gift_id = gift.get('id', None)
-            gift_name = gift.get('name', 'nowy produkt')
-            gift_url = gift.get('url', '')
-            read_only = gift.get('external', True)
-            if gift_id is None:
-                product = Product.objects.create(id=gift_id)
-                created = True
-            else:
-                created, product = Product.objects.get_or_create(id=gift_id)
-            if created or not read_only:
-                product.name = gift_name
-                product.url = gift_url
+            product_dict = prod.get('product')
+            if isinstance(product_dict,dict):
+                product, created = Product.objects.get_or_create(name=product_dict.get('name'), owner=event.owner)
+                product.url = product_dict.get('url')
                 product.save()
-            gift = Gift.objects.create(product=product, event=event)
+            else:
+                product = product_dict
+            gift, created = Gift.objects.get_or_create(product=product, event=event)
             gift.save()
         return event
 

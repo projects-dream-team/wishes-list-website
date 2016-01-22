@@ -10,6 +10,7 @@ commonApp.controller('DeleteEventCtrl', ['$scope', '$rootScope', 'EventService',
         $scope.ok = function () {
             EventService.deleteEvent($scope.additionalData.idToEdit).success(function (data) {
                 $rootScope.$broadcast('eventDelete',{name:$scope.additionalData});
+                $rootScope.$broadcast('event-changed');
                 $uibModalInstance.close();
             }).error(function (error) {
                 $scope.loadFailed = true;
