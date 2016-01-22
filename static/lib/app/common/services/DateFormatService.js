@@ -10,7 +10,10 @@ commonApp.service('DateFormatService',
 
         this.unformatDate = function(date){
             return $filter('date')(date, 'dd.MM.yyyy HH:mm')
-        }
+        };
 
+        this.fromJsDate = function(date){
+            return $filter('date')(date, 'yyyy-MM-ddTHH:mm')
+        }
     }
 );

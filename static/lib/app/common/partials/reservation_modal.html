@@ -7,40 +7,48 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid" ng-controller="ReservationCtrl">
         <div class="row">
             <div class="col-xs-12" ng-init="initData()">
                     <!-- Project Details Go Here -->
                     <h2>Rezerwuj <span ng-bind="formData.product_name"></span></h2>
-                    <form id="reservation-form" class="wishes-form" novalidate ng-init="initForm('#reservation-form')">
-                        <div class="row">
+                        <div class="row" ng-show="!isLoading&&formSubmitted">
                             <div ng-show="!success">
-                                <div class="col-xs-12 text-center">
-                                    <i class="fa fa-question-circle fa-3x"></i>
+                                <div class="col-xs-12 text-center text-danger">
+                                    <i class="fa fa-exclamation-triangle fa-3x"></i>
                                 </div>
-                                <div class="col-xs-12 text-center">
-                                    <h4>Czy zarezerwować wybrany prezent?</h4>
+                                <div class="col-xs-12 text-center text-danger">
+                                    <h4 ng-bind="message"></h4>
+                                    <div ng-show="!message">
+                                        Coś poszło nie tak :(, skontaktuj się z administratorem.
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="success">
+                                <div class="col-xs-12 text-center text-success">
+                                    <i class="fa fa-check fa-5x"></i>
+                                </div>
+                                <div class="col-xs-12 text-center text-success">
+                                    <h4>Produkt zarezerwowany</h4>
                                 </div>
                             </div>
                         </div>
+                    <form id="reservationForm" name="form" class="wishes-form" novalidate ng-init="initForm('.wishes-form','/api/gifts/')" ng-show="!isLoading&&!formSubmitted">
+
                         <div class="row" ng-if="!formData.reserved_by">
                             <div class="col-md-8 col-md-offset-2">
 
 
 
-                                <div class="form-group">
-                                    <input type="email" ng-model="formData.reserved_by_anonymous" class="form-control" maxlength="50" placeholder="Twój Email *" id="email" required data-validation-required-message="Wpisz swój adres email." data-validation-email-message="Niepoprawny adres email">
-                                    <p class="help-block text-danger text-left"></p>
+                                <div class="form-group" ng-init="initForm('.wishes-form','/api/gifts/')">
+                                    <input type="email" required name="email" ng-model="formData.reserved_by_anonymous" class="form-control" maxlength="50" placeholder="Twój Email *" id="email" data-validation-required-message="Wpisz swój adres email." data-validation-email-message="Niepoprawny adres email" >
+                                    <p class="help-block text-danger text-left" ></p>
                                 </div>
 
                             </div>
                         </div>
-                        <div class="row" ng-show="isLoading">
-                            <div class="col-xs-12 text-center">
-                                <i class="fa fa-spinner fa-spin fa-5x"></i>
-                            </div>
-                        </div>
-                        <div class="row" ng-show="!isLoading">
+
+                        <div class="row">
                             <div class="clearfix"></div>
                             <div class="col-lg-12 text-center">
                                 <div id="success"></div>

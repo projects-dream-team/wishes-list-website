@@ -1,37 +1,18 @@
-commonApp.controller('ReservationCtrl', ['$scope', '$rootScope', 'EventService', '$controller', '$uibModalInstance',
-    function ($scope, $rootScope, EventService, $controller, $uibModalInstance) {
-
-        $scope.additionalData = $uibModalInstance.extData;
+commonApp.controller('ReservationCtrl', ['$scope', '$rootScope', 'EventService', 'DateFormatService', '$controller',
+    function ($scope, $rootScope, EventService, DateFormatService, $controller) {
+        angular.extend(this, $controller('FormCtrl', {$scope: $scope}));
+        //$scope.additionalData = $uibModalInstance.extData;
 
         $scope.loadFailed = false;
         $scope.isLoading = true;
-        console.log($scope.additionalData);
-        $scope.initForm = function(formID){
-            console.log(formID+' input,'+formID+' textarea');
-            //console.log($(formID+' input,'+formID+' textarea'));
-            $(formID+' input,'+formID+' textarea').jqBootstrapValidation({
-                preventSubmit: true,
-                submitError: function($form, event, errors) {
-                    // additional error messages or events
-                    console.log(errors);
-                },
-                submitSuccess: function($form, event) {
-                    event.preventDefault(); // prevent default submit behaviour
-                    // get values from FORM
-                    $scope.submit();
-                },
-                filter: function() {
-                    return $(this).is(":visible");
-                },
-            });
-        };
+        $scope.formSubmitted = false;
         $scope.initData = function(){
             EventService.getGift($scope.additionalData.idToEdit).success(function (data) {
                 $scope.formData = data;
 
-                if ($scope.additionalData.user != 'None'){
+                if ($scope.additionalData.user != 'None') {
                     $scope.formData.reserved_by = $scope.additionalData.user
-                }else{
+                } else {
                     $scope.formData.reserved_by = null;
                 }
 
@@ -42,13 +23,14 @@ commonApp.controller('ReservationCtrl', ['$scope', '$rootScope', 'EventService',
 
         };
 
-        $scope.submit = function(){
+        $scope.submit = function(apiUrl){
+            console.log('submit from reservation');
             $scope.isLoading = true;
-            $scope.formData.reservation_date = Date.now();
-            EventService.editGift($scope.formData).success(function (data) {
-                $rootScope.$broadcast('eventDelete',{name:$scope.additionalData});
-                $rootScope.$broadcast('event-changed');
-                $uibModalInstance.close();
+
+            $scope.formData.reservation_date = DateFormatService.fromJsDate(Date.now());
+            EventService.editGift($scope.formData.id,$scope.formData).success(function (data) {
+                $rootScope.$broadcast('gift-reserved');
+                $scope.formSubmitted = true;
                 $scope.success = true;
                 $scope.isLoading = false;
             }).error(function (error) {
@@ -56,10 +38,7 @@ commonApp.controller('ReservationCtrl', ['$scope', '$rootScope', 'EventService',
             });
 
         };
-
-        $scope.close = function () {
-
-            $uibModalInstance.dismiss('cancel');
-        };
-
+        $rootScope.$on('gift-reserved',function(data){
+            location.reload();
+        })
     }]);
