@@ -24,10 +24,24 @@ commonApp.controller('ReservationCtrl', ['$scope', '$rootScope', 'EventService',
         };
 
         $scope.submit = function(apiUrl){
-            console.log('submit from reservation');
             $scope.isLoading = true;
 
             $scope.formData.reservation_date = DateFormatService.fromJsDate(Date.now());
+            EventService.editGift($scope.formData.id,$scope.formData).success(function (data) {
+                $rootScope.$broadcast('gift-reserved');
+                $scope.formSubmitted = true;
+                $scope.success = true;
+                $scope.isLoading = false;
+            }).error(function (error) {
+                $scope.loadFailed = true;
+            });
+
+        };
+        $scope.cancelReservation = function(){
+            $scope.isLoading = true;
+
+            $scope.formData.reservation_date = null;
+            $scope.formData.reserved_by = null;
             EventService.editGift($scope.formData.id,$scope.formData).success(function (data) {
                 $rootScope.$broadcast('gift-reserved');
                 $scope.formSubmitted = true;

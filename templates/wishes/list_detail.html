@@ -26,7 +26,7 @@
                 {% for gift in gifts %}
 
 
-                    <div class="row">
+                    <div class="row border-bottom extra-space">
                         <div class="col-md-8">
                             <h4>{{ gift.product.name }}</h4>
                         </div>
@@ -51,6 +51,10 @@
                                 {% else %}
                                     <div class="text-success">
                                         <i class="fa fa-check"></i> Zarezerwowany dnia: {{ gift.reservation_date|date:"SHORT_DATE_FORMAT" }}
+                                        {% if gift.reserved_by == request.user %}
+                                            &nbsp;
+                                        <button type="button" ng-click="showModal('common/partials/reservation_cancel_modal',{controller:'BaseModalCtrl',additionalData:{idToEdit:'{{ gift.id |escapejs }}',user:'{{ request.user.id |escapejs }}', cancel:true}})" class="btn btn-danger pull-right"><i class="fa fa-times-circle-o"></i></button>
+                                        {% endif %}
                                     </div>
                                 {% endif %}
                             </div>
