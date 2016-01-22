@@ -6,10 +6,13 @@ commonApp.controller('FormCtrl', [
         $scope.formSubmitted = false;
         $scope.additionalData;
         $scope.initForm = function(formID,apiURL,additionalData){
-            //console.log(formID+' input,'+formID+' textarea');
-            //console.log($(formID+' input,'+formID+' textarea'));
-            $scope.additionalData = additionalData;
-            $(formID+' input,'+formID+' textarea').jqBootstrapValidation({
+            console.log(formID+' input,'+formID+' textarea');
+            console.log($(formID+' input,'+formID+' textarea'));
+            if(additionalData!=undefined){
+                $scope.additionalData = additionalData;
+            }
+            $(formID+' input,'+formID+' textarea').jqBootstrapValidation("destroy");
+            $(formID+' input,'+formID+' textarea').not("[type=submit]").jqBootstrapValidation({
                 preventSubmit: true,
                 submitError: function($form, event, errors) {
                     // additional error messages or events
@@ -19,10 +22,7 @@ commonApp.controller('FormCtrl', [
                     event.preventDefault(); // prevent default submit behaviour
                     // get values from FORM
                     $scope.submit(apiURL);
-                },
-                filter: function() {
-                    return $(this).is(":visible");
-                },
+                }
             });
         };
 
@@ -47,6 +47,7 @@ commonApp.controller('FormCtrl', [
             });
         };
         $scope.submit = function(apiUrl) {
+            console.log('submit from form controller');
             $scope.formSubmitted = true;
             $scope.isLoading = true;
             $http.post(apiUrl, $scope.formData
