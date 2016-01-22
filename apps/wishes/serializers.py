@@ -59,7 +59,7 @@ class EventSerializer(serializers.ModelSerializer):
             product_dict = prod.get('product')
             if isinstance(product_dict,dict):
                 product, created = Product.objects.get_or_create(name=product_dict.get('name'), owner=event.owner)
-                product.url = product_dict.get('url','#')
+                product.url = product_dict.get('url','')
                 product.save()
             else:
                 product = product_dict
