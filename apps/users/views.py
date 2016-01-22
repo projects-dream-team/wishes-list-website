@@ -40,3 +40,8 @@ def activate(request, code):
 def my_profile(request):
     user = request.user
     return render(request, 'users/my_profile.html', {'user': user})
+
+@login_required
+def my_friends(request):
+    user = request.user
+    return render(request, 'users/friends.html', {'user': user})

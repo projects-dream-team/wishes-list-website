@@ -42,10 +42,14 @@
                             </div>
                         {% else %}
                         <div class="col-md-4 actions">
-                            <div class="btn-group" role="group" aria-label="...">
-                              <button type="button" class="btn btn-default">Rezerwuj</button>
-                              <button type="button" class="btn btn-default">Middle</button>
-                              <button type="button" class="btn btn-default">Right</button>
+                            <div class="btn-group" role="group" aria-label="..." ng-controller="ModalCtrl">
+                                {% if not gift.reservation_date %}
+                                    <button type="button" ng-click="showModal('common/partials/reservation_modal',{controller:'ReservationCtrl',additionalData:{idToEdit:'{{ gift.id |escapejs }}',user:'{{ request.user.id |escapejs }}'}})" class="btn btn-default">Rezerwuj</button>
+                                {% else %}
+                                    <div class="text-success">
+                                        <i class="fa fa-check"></i> Zarezerwowany dnia: {{ gift.reservation_date|date:"SHORT_DATE_FORMAT" }}
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                         {% endif %}
@@ -53,11 +57,6 @@
                     </div>
 
                 {% endfor %}
-            </div>
-            <div class="row">
-                <div class="col-xs-12 text-center">
-                    <a href="#" class="btn btn-xl">Wczytaj więcej</a>
-                </div>
             </div>
         </div>
     </section>

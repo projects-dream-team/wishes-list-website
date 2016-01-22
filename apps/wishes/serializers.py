@@ -13,7 +13,7 @@ class GiftSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Gift
-        extra_kwargs = {'id': {'required': False}, 'event': {'required': False}, 'product': {'required': False}}
+        extra_kwargs = {'id': {'required': False}, 'event': {'required': False}, 'product': {'required': False}, 'product_url':{'required': False}}
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -60,8 +60,9 @@ class EventSerializer(serializers.ModelSerializer):
                 product.save()
             else:
                 product = product_dict
-            gift, created = Gift.objects.get_or_create(product=product, event=event)
-            gift.save()
+            if product is not None:
+                gift, created = Gift.objects.get_or_create(product=product, event=event)
+                gift.save()
         return event
 
 

@@ -1,10 +1,13 @@
-commonApp.service('EventService', [
+commonApp.service('FriendsService', [
     '$http',
     function($http) {
         this.deleteEvent = function(id) {
             return $http.delete('/api/event/'+id+'/');
         };
 
+        this.getRequests = function(id) {
+            return $http.get('/api/friendship/'+id+'/');
+        };
         this.getEvent = function(id) {
             return $http.get('/api/event/'+id+'/');
         };
@@ -15,14 +18,6 @@ commonApp.service('EventService', [
 
         this.getEventsForUser = function(id) {
             return $http.get('/api/event/?owner='+id);
-        };
-
-        this.getGift = function(id){
-            return $http.get('/api/gifts/'+id+'/');
-        };
-
-        this.editGift = function(id,data){
-            return $http.put('/api/gifts/'+id+'/',data);
         };
     }
 ]);
