@@ -13,15 +13,18 @@ class GiftSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Gift
-        extra_kwargs = {'id': {'required': False}, 'event': {'required': False}, 'product': {'required': False}, 'product_url':{'required': False}}
+        extra_kwargs = {'id': {'required': False}, 'event': {'required': False}, 'product': {'required': False},
+                        'product_url': {'required': False}}
 
     def get_validation_exclusions(self):
         exclusions = super(GiftSerializer, self).get_validation_exclusions()
         return exclusions + ['product_url']
 
+
 class EventSerializer(serializers.ModelSerializer):
     gifts = GiftSerializer(many=True, source='wishes_set')
     full_url = serializers.SerializerMethodField()
+    owner_nick = serializers.CharField(source='owner.nick', read_only=True)
 
     class Meta:
         model = Event
@@ -57,9 +60,9 @@ class EventSerializer(serializers.ModelSerializer):
         event.wishes_set.all().delete()
         for prod in gifts:
             product_dict = prod.get('product')
-            if isinstance(product_dict,dict):
+            if isinstance(product_dict, dict):
                 product, created = Product.objects.get_or_create(name=product_dict.get('name'), owner=event.owner)
-                product.url = product_dict.get('url','')
+                product.url = product_dict.get('url', '')
                 product.save()
             else:
                 product = product_dict
