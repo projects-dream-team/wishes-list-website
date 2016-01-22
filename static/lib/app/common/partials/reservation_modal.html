@@ -1,0 +1,54 @@
+
+
+
+    <div class="close-modal" ng-click="close()">
+        <div class="lr">
+            <div class="rl">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12" ng-init="initData()">
+                    <!-- Project Details Go Here -->
+                    <h2>Rezerwuj <span ng-bind="formData.product_name"></span></h2>
+                    <form id="reservation-form" class="wishes-form" novalidate ng-init="initForm('#reservation-form')">
+                        <div class="row">
+                            <div ng-show="!success">
+                                <div class="col-xs-12 text-center">
+                                    <i class="fa fa-question-circle fa-3x"></i>
+                                </div>
+                                <div class="col-xs-12 text-center">
+                                    <h4>Czy zarezerwować wybrany prezent?</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="!formData.reserved_by">
+                            <div class="col-md-8 col-md-offset-2">
+
+
+
+                                <div class="form-group">
+                                    <input type="email" ng-model="formData.reserved_by_anonymous" class="form-control" maxlength="50" placeholder="Twój Email *" id="email" required data-validation-required-message="Wpisz swój adres email." data-validation-email-message="Niepoprawny adres email">
+                                    <p class="help-block text-danger text-left"></p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row" ng-show="isLoading">
+                            <div class="col-xs-12 text-center">
+                                <i class="fa fa-spinner fa-spin fa-5x"></i>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="!isLoading">
+                            <div class="clearfix"></div>
+                            <div class="col-lg-12 text-center">
+                                <div id="success"></div>
+                                <button type="submit" class="btn btn-xl"><i class="fa fa-check"></i> Rezerwuj</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

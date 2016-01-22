@@ -105,8 +105,4 @@ commonApp.controller('EventCtrl',
             console.log("gifts changed");
         }, true);
 
-        $scope.showFormData = function(){
-            console.log($scope.formData);
-        };
-
     }]);

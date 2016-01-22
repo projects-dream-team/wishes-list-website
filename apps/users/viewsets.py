@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from django.db.models import Q
 from rest_framework import viewsets, status
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, UpdateModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
@@ -36,6 +37,17 @@ class FrendshipViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     queryset = Friendship.objects.active()
     serializer_class = FriendshipSerializer
+
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('creator','friend','is_active')
+
+    def get_queryset(self):
+        requests = self.request.GET.get('requests',False)
+        if requests:
+            queryset = Friendship.objects.filter(Q(is_active=False) | Q(friend=self.request.user))
+        else:
+            queryset = Friendship.objects.filter(Q(creator=self.request.user) | Q(friend=self.request.user))
+        return queryset
 
 
 class UserRegisterViewSet(CreateModelMixin, viewsets.GenericViewSet):

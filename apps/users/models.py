@@ -128,6 +128,7 @@ class UserCode(models.Model):
     def __str__(self):
         return self.code
 
+
 @python_2_unicode_compatible
 class Friendship(BaseModel):
     creator = models.ForeignKey(User, verbose_name=_('Creator'), related_name="friendship_creator_set")
@@ -136,7 +137,8 @@ class Friendship(BaseModel):
     class Meta:
         verbose_name = _('Friendship')
         verbose_name_plural = _('Friendships')
-
+        unique_together = ['creator', 'friend']
 
     def __str__(self):
-        return unicode(_('%(creator)s has added %(friend)s to firends.') % {'creator': self.creator.nick, 'friend': self.friend.nick})
+        return unicode(_('%(creator)s has added %(friend)s to firends.') % {'creator': self.creator.nick,
+                                                                            'friend': self.friend.nick})

@@ -1,10 +1,106 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "base/base.html" %}
+{% load thumbnail %}
+{% load core_tags %}
 
-</body>
-</html>
+{% block navbar %}
+    {% include "base/wishes_navbar.html" %}
+{% endblock %}
+{% block content %}
+{% get_site_settings as settings %}
+    <header>
+        <div class="container">
+            <div class="intro-text " ng-controller="ModalCtrl">
+                <div class="intro-lead-in"><i class="fa fa-users"></i> z nimi możesz dzielić się swoimi listami</div>
+                <div class="intro-heading">Twoi znajomi</div>
+                <a href="#request" class="page-scroll btn btn-xl"><i class="fa fa-chevron-down"></i> Zobacz listę prezentów</a>
+            </div>
+        </div>
+    </header>
+<div ng-controller="EventListCtrl">
+
+
+    <section id="requests" class="bg-light-gray">
+
+        <div class="container">
+            <div class="container" ng-init="initData({{ request.user.id | escapejs }})" ng-show="!gatheringData">
+
+                    <div class="col-md-6 col-xs-12">
+                        <div class="form-group">
+                            <input type="text" ng-model="search.name" class="form-control"
+                                   maxlength="50" placeholder="Szukaj... " id="email">
+
+                            <p class="help-block text-danger text-left"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <div class="btn-group">
+                            <label class="btn btn-success" ng-model="showFuture" uib-btn-radio="true" uncheckable>Nadchodzące</label>
+                            <label class="btn btn-success" ng-model="showFuture" uib-btn-radio="false" uncheckable>Wszystkie</label>
+                        </div>
+                    </div>
+                    <div class="row border-bottom extra-space bottom" ng-repeat="event in filtered = (lists | isAfter:'date':showFuture | filter:search | orderBy: '-date':true) | limitTo: limit as results  track by $index">
+                        <div class="col-md-8">
+                            <a href="{$ event.full_url $}"><h4 ng-bind="event.name"></h4></a>
+                            <h5><i class="fa fa-clock-o"></i> <span ng-bind="event.date | date: 'd MMM yyyy H:mm'"></span></h5>
+                        </div>
+                        <div class="col-md-4 actions" ng-controller="ModalCtrl">
+                            <div class="btn-group pull-right" role="group" aria-label=".">
+                              <button type="button" class="button btn btn-default" ng-click="showModal('common/partials/new_list_modal',{size:'lg',controller:'BaseModalCtrl',additionalData:{additionalData:{idToEdit:event.id,name:event.name}}})"><i class="fa fa-edit"></i></button>
+                              <button type="button" class="button btn btn-danger" ng-click="showModal('common/partials/delete_event_modal',{controller:'DeleteEventCtrl',additionalData:{idToEdit:event.id,name:event.name}})"><i class="fa fa-trash-o"></i></button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div id="bottom" class="row" ng-show="gatheringData">
+                <div class="col-xs-12 text-center">
+                    <i class="fa fa-spinner fa-spin fa-5x"></i>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section id="friends" class="bg-light-gray">
+        <div class="container">
+            <div class="container" ng-init="initData({{ request.user.id | escapejs }})" ng-show="!gatheringData">
+
+                    <div class="col-md-6 col-xs-12">
+                        <div class="form-group">
+                            <input type="text" ng-model="search.name" class="form-control"
+                                   maxlength="50" placeholder="Szukaj... " id="email">
+
+                            <p class="help-block text-danger text-left"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <div class="btn-group">
+                            <label class="btn btn-success" ng-model="showFuture" uib-btn-radio="true" uncheckable>Nadchodzące</label>
+                            <label class="btn btn-success" ng-model="showFuture" uib-btn-radio="false" uncheckable>Wszystkie</label>
+                        </div>
+                    </div>
+                    <div class="row border-bottom extra-space bottom" ng-repeat="event in filtered = (lists | isAfter:'date':showFuture | filter:search | orderBy: '-date':true) | limitTo: limit as results  track by $index">
+                        <div class="col-md-8">
+                            <a href="{$ event.full_url $}"><h4 ng-bind="event.name"></h4></a>
+                            <h5><i class="fa fa-clock-o"></i> <span ng-bind="event.date | date: 'd MMM yyyy H:mm'"></span></h5>
+                        </div>
+                        <div class="col-md-4 actions" ng-controller="ModalCtrl">
+                            <div class="btn-group pull-right" role="group" aria-label=".">
+                              <button type="button" class="button btn btn-default" ng-click="showModal('common/partials/new_list_modal',{size:'lg',controller:'BaseModalCtrl',additionalData:{additionalData:{idToEdit:event.id,name:event.name}}})"><i class="fa fa-edit"></i></button>
+                              <button type="button" class="button btn btn-danger" ng-click="showModal('common/partials/delete_event_modal',{controller:'DeleteEventCtrl',additionalData:{idToEdit:event.id,name:event.name}})"><i class="fa fa-trash-o"></i></button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div id="bottom" class="row" ng-show="filtered.length > results.length&&!gatheringData">
+                <div class="col-xs-12 text-center">
+                    <a href="#bottom" class="btn btn-xl page-scroll" ng-click="showMore()">Wczytaj więcej</a>
+                </div>
+            </div>
+            <div id="bottom" class="row" ng-show="gatheringData">
+                <div class="col-xs-12 text-center">
+                    <i class="fa fa-spinner fa-spin fa-5x"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
