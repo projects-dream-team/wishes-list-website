@@ -1,6 +1,6 @@
 commonApp.controller('EventCtrl',
-    ['$rootScope', '$http', '$scope', '$window', '$controller', 'CurrentUserService', 'DateFormatService', 'EventService',
-    function($rootScope, $http, $scope, $window, $controller, CurrentUserService, DateFormatService, EventService) {
+    ['$rootScope', '$http', '$scope', '$window', '$controller', '$timeout', 'CurrentUserService', 'DateFormatService', 'EventService',
+    function($rootScope, $http, $scope, $window, $controller, $timeout, CurrentUserService, DateFormatService, EventService) {
 
         angular.extend(this, $controller('FormCtrl', {$scope: $scope}));
 
@@ -101,8 +101,8 @@ commonApp.controller('EventCtrl',
             $scope.formData.gifts.splice(index, 1);
         };
 
-        $scope.$watch('formData.gifts.length', function(newValue, oldValue) {
-            console.log("gifts changed");
+        $scope.$watch('formData.gifts', function(newValue, oldValue) {
+            $scope.initValidation('#eventForm')
         }, true);
 
     }]);

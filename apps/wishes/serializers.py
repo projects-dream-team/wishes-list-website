@@ -8,13 +8,16 @@ from products.serializers import ProductSerializer
 
 class GiftSerializer(serializers.ModelSerializer):
     product_name = serializers.CharField(source='product.name', required=False)
-    product_url = serializers.CharField(source='product.url', required=False)
+    product_url = serializers.CharField(source='product.url', required=False, allow_null=True)
     product_id = serializers.CharField(source='product.id', required=False)
 
     class Meta:
         model = Gift
         extra_kwargs = {'id': {'required': False}, 'event': {'required': False}, 'product': {'required': False}, 'product_url':{'required': False}}
 
+    def get_validation_exclusions(self):
+        exclusions = super(GiftSerializer, self).get_validation_exclusions()
+        return exclusions + ['product_url']
 
 class EventSerializer(serializers.ModelSerializer):
     gifts = GiftSerializer(many=True, source='wishes_set')
@@ -32,17 +35,17 @@ class EventSerializer(serializers.ModelSerializer):
         event.save()
         for prod in gifts:
             gift = prod.get('product')
-            gift_id = gift.get('id', None)
-            gift_name = gift.get('name', 'nowy produkt')
-            gift_url = gift.get('url', '')
-            read_only = gift.get('external', True)
+            if gift is not None:
+                gift_name = gift.get('name', 'nowy produkt')
+                gift_url = gift.get('url', '')
+                read_only = gift.get('external', True)
 
-            product, created = Product.objects.get_or_create(name=gift_name, owner=event.owner)
-            product.name = gift_name
-            product.url = gift_url
-            product.save()
-            gift = Gift.objects.create(product=product, event=event)
-            gift.save()
+                product, created = Product.objects.get_or_create(name=gift_name, owner=event.owner)
+                product.name = gift_name
+                product.url = gift_url
+                product.save()
+                gift = Gift.objects.create(product=product, event=event)
+                gift.save()
         return event
 
     def update(self, instance, validated_data):
@@ -56,7 +59,7 @@ class EventSerializer(serializers.ModelSerializer):
             product_dict = prod.get('product')
             if isinstance(product_dict,dict):
                 product, created = Product.objects.get_or_create(name=product_dict.get('name'), owner=event.owner)
-                product.url = product_dict.get('url')
+                product.url = product_dict.get('url','#')
                 product.save()
             else:
                 product = product_dict
