@@ -38,6 +38,7 @@ router.register(r'product', ProductViewSet)
 router.register(r'contact', ContactViewSet, base_name='contact')
 router.register(r'user_register', UserRegisterViewSet, base_name='register')
 router.register(r'current_user', CurrentUserViewSet, base_name='current_user')
+router.register(r'friends_events', FriendsEventsViewSet, base_name='friends_events')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
