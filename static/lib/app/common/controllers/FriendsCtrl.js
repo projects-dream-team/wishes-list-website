@@ -28,14 +28,17 @@ commonApp.controller('FriendsCtrl',
         };
 
         $scope.searchFriends = function(){
-            $scope.gatheringData = true;
-            FriendsService.getRequests().success(function(data){
-                $scope.requests = data;
 
-                $scope.gatheringData = false;
-            }).error(function(error){
-                $scope.loadFailed = true;
-            });
+            if($scope.searchString != '') {
+                $scope.gatheringData = true;
+                FriendsService.searchFriends($scope.searchString).success(function (data) {
+                    $scope.users = data;
+
+                    $scope.gatheringData = false;
+                }).error(function (error) {
+                    $scope.loadFailed = true;
+                });
+            }
         };
 
         $scope.loadFriends = function(){
@@ -54,6 +57,20 @@ commonApp.controller('FriendsCtrl',
             friendship.is_active=true;
             console.log(friendship);
             FriendsService.accept(friendship.id,friendship).success(function(data){
+                $rootScope.$broadcast('frendship-changed');
+
+                $scope.gatheringData = false;
+            }).error(function(error){
+                $scope.loadFailed = true;
+            });
+        };
+
+        $scope.initSearch = function(){
+            $scope.gatheringData = false;
+        };
+        $scope.addToFriend = function(id,current_user_id) {
+            var friendship = {is_active:false,owner:current_user_id,friend:id};
+            FriendsService.addToFriend(friendship).success(function(data){
                 $rootScope.$broadcast('frendship-changed');
 
                 $scope.gatheringData = false;

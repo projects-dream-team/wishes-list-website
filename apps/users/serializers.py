@@ -13,30 +13,13 @@ from .models import *
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     url_to_lists = serializers.SerializerMethodField()
-    is_friend = serializers.SerializerMethodField()
-
-    def get_is_friend(self, obj):
-        request = self.context.get("request")
-        if request is not None:
-            print obj
-            frendship = Friendship.objects.filter(owner=obj)
-            print frendship
-            if frendship is not None:
-                return True
-            frendship = Friendship.objects.filter(friend=request.user, owner=obj).first()
-            print frendship
-            if frendship is not None:
-                return True
-            return False
-        else:
-            return 'cant-check'
 
     def get_url_to_lists(self, obj):
         return obj.lists_url
 
     class Meta:
         model = User
-        fields = ('id', 'nick', 'email', 'password', 'url_to_lists', 'is_friend')
+        fields = ('id', 'nick', 'email', 'password', 'url_to_lists',)
 
     def create(self, validated_data):
         user = User()

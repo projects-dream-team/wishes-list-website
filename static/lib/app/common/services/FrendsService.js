@@ -16,5 +16,13 @@ commonApp.service('FriendsService', [
         this.decline = function(id) {
             return $http.delete('/api/friendship/'+id+'/');
         };
+
+        this.searchFriends = function(search){
+            return $http.get('/api/users/?search='+search);
+        };
+
+        this.addToFriend = function(data) {
+            return $http.post('/api/friendship/',data);
+        };
     }
 ]);

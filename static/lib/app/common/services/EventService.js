@@ -24,5 +24,6 @@ commonApp.service('EventService', [
         this.editGift = function(id,data){
             return $http.put('/api/gifts/'+id+'/',data);
         };
+
     }
 ]);

@@ -19,32 +19,33 @@
 <div >
 
 
-    <section id="search" class="bg-light-gray" ng-controller="FriendsCtrl"  ng-init="currentUserNick='{{ request.user.nick }}'">
+    <section id="search" class="bg-light-gray" ng-controller="FriendsCtrl"  ng-init="currentUserId='{{ request.user.id }}'">
 
-        <div class="container" ng-init="loadRequests()">
+        <div class="container" ng-init="initSearch()">
             <div class="row" ng-show="!gatheringData">
 
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Nowe zaproszenia</h2>
-                    <h3 class="section-subheading text-muted">Ci użytkownicy chcieliby CIę dodać do znajomych!</h3>
+                    <h2 class="section-heading">Dodaj znajomych</h2>
+                    <h3 class="section-subheading text-muted">Wpisz nick szukanego użytkownika</h3>
                 </div>
 
-                    <div class="col-md-6 col-xs-12" ng-show="requests.length">
+                    <div class="col-md-6 col-xs-12" >
                         <div class="form-group">
-                            <input type="text" ng-model="search.owner_nick" class="form-control"
+                            <div class="input-group">
+                            <input type="text" ng-model="searchString" class="form-control"
                                    maxlength="50" placeholder="Szukaj... " id="email">
-
-                            <p class="help-block text-danger text-left"></p>
+                            <span  class="button btn btn-danger input-group-addon" ng-click="searchFriends()"><i class="fa fa-search"></i> Szukaj</span>
+                            </div>
+                                <p class="help-block text-danger text-left"></p>
                         </div>
                     </div>
-                    <div class="row border-bottom extra-space bottom" ng-repeat="r in filtered = (requests | filter:search ) | limitTo: limitRequests as results  track by $index">
+                    <div class="row border-bottom extra-space bottom" ng-repeat="u in users | limitTo: limitRequests as results  track by $index">
                         <div class="col-md-8">
-                            <a href="{$ event.full_url $}"><i class="fa fa-user-plus"></i> <h4 ng-bind="r.owner_nick"></h4></a>
+                            <a href="{$ u.lists_url $}"><i class="fa fa-user-plus"></i> <h4 ng-bind="u.nick"></h4></a>
                         </div>
                         <div class="col-md-4 actions">
                             <div class="btn-group pull-right" role="group" aria-label=".">
-                              <button type="button" class="button btn btn-default" ng-click="accept(r)"><i class="fa fa-check"></i></button>
-                              <button type="button" class="button btn btn-danger" ng-click="decline(r)"><i class="fa fa-trash-o"></i></button>
+                              <button type="button" class="button btn btn-default" ng-click="addToFriend(u.id,currentUserId)"><i class="fa fa-check"></i></button>
                             </div>
                         </div>
                     </div>
@@ -56,52 +57,11 @@
             </div>
             <div id="bottom" class="row" ng-show="!gatheringData&&!requests.lenght">
                 <div class="col-xs-12 text-center">
-                    <h5><i class="fa fa-inbox fa-2x"></i> Brak zaproszeń</h5>
+                    <h5><i class="fa fa-info fa-2x"></i> Brak wyników</h5>
                 </div>
             </div>
         </div>
 
-    </section>
-    <section id="friends" class="bg-light-gray" ng-controller="FriendsCtrl" ng-init="currentUserNick='{{ request.user.nick|escapejs}}'">
-        <div class="container">
-            <div class="row" ng-init="loadFriends()" ng-show="!gatheringData">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Twoi znajomi</h2>
-                    <h3 class="section-subheading text-muted">Z nimi możesz dzielić się swoimi listami!</h3>
-                </div>
-                    <div class="col-md-6 col-xs-12">
-                        <div class="form-group">
-                            <input type="text" ng-model="search.friend_nick" class="form-control"
-                                   maxlength="50" placeholder="Szukaj... " id="email">
-
-                            <p class="help-block text-danger text-left"></p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-                    </div>
-                    <div class="row border-bottom extra-space bottom" ng-repeat="f in filtered = (friends | filter:search ) | limitTo: limitFriends as results  track by $index">
-                        <div class="col-md-8">
-                            <a href="{$ event.full_url $}"><h4 ><i class="fa fa-user"></i> <span ng-bind="f.friend_nick" ng-show="f.friend_nick!=currentUserNick"></span> <span ng-bind="f.owner_nick" ng-show="f.owner_nick!=currentUserNick"></span></h4></a>
-                            <h5><span ng-bind="event.date | date: 'd MMM yyyy H:mm'"></span></h5>
-                        </div>
-                        <div class="col-md-4 actions" ng-controller="ModalCtrl">
-                            <div class="btn-group pull-right" role="group" aria-label=".">
-                              <button type="button" class="button btn btn-danger" ng-click="showModal('common/partials/delete_event_modal',{controller:'DeleteEventCtrl',additionalData:{idToEdit:event.id,name:event.name}})"><i class="fa fa-trash-o"></i></button>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div id="bottom" class="row" ng-show="filtered.length > results.length&&!gatheringData">
-                <div class="col-xs-12 text-center">
-                    <a href="#bottom" class="btn btn-xl page-scroll" ng-click="showMoreFriends()">Wczytaj więcej</a>
-                </div>
-            </div>
-            <div id="bottom" class="row" ng-show="gatheringData">
-                <div class="col-xs-12 text-center">
-                    <i class="fa fa-spinner fa-spin fa-5x"></i>
-                </div>
-            </div>
-        </div>
     </section>
 </div>
 {% endblock %}
