@@ -3,20 +3,23 @@ commonApp.controller('FriendsCtrl',
     function($rootScope, $http, $scope, $window, $filter, CurrentUserService, FriendsService) {
 
 
-        $scope.lists = [];
+        $scope.requests = [];
+        $scope.friends = [];
+        $scope.users = [];
         $scope.loadFailed = false;
         $scope.gatheringData = true;
-        $scope.showFuture = true;
-        $scope.limit = 10;
+        $scope.limitFriends = 10;
+        $scope.limitRequests = 10;
+        $scope.searchString = '';
         $scope.initData = function(userId){
                 $scope.userId = userId;
                 $scope.loadLists();
             };
 
-        $scope.loadLists = function(){
+        $scope.loadRequests = function(){
             $scope.gatheringData = true;
-            EventService.getEventsForUser($scope.userId).success(function(data){
-                $scope.lists = data;
+            FriendsService.getRequests().success(function(data){
+                $scope.requests = data;
 
                 $scope.gatheringData = false;
             }).error(function(error){
@@ -24,12 +27,86 @@ commonApp.controller('FriendsCtrl',
             });
         };
 
-        $scope.$on('event-changed', function(data){
-            $scope.loadLists();
+        $scope.searchFriends = function(){
+
+            if($scope.searchString != '') {
+                $scope.gatheringData = true;
+                FriendsService.searchFriends($scope.searchString).success(function (data) {
+                    $scope.users = data;
+
+                    $scope.gatheringData = false;
+                }).error(function (error) {
+                    $scope.loadFailed = true;
+                });
+            }
+        };
+
+        $scope.loadFriends = function(){
+            $scope.gatheringData = true;
+            FriendsService.getFriends().success(function(data){
+                $scope.friends = data;
+
+                $scope.gatheringData = false;
+            }).error(function(error){
+                $scope.loadFailed = true;
+            });
+        };
+
+        $scope.accept = function(friendship) {
+            $scope.gatheringData = true;
+            friendship.is_active=true;
+            console.log(friendship);
+            FriendsService.accept(friendship.id,friendship).success(function(data){
+                $rootScope.$broadcast('frendship-changed');
+
+                $scope.gatheringData = false;
+            }).error(function(error){
+                $scope.loadFailed = true;
+            });
+        };
+
+        $scope.initSearch = function(){
+            $scope.gatheringData = false;
+        };
+        $scope.addToFriend = function(id,current_user_id) {
+            var friendship = {is_active:false,owner:current_user_id,friend:id};
+            FriendsService.addToFriend(friendship).success(function(data){
+                $rootScope.$broadcast('frendship-changed');
+
+                $scope.gatheringData = false;
+            }).error(function(error){
+                $scope.loadFailed = true;
+            });
+        };
+
+        $scope.decline = function(friendship) {
+            FriendsService.decline(friendship.id).success(function(data){
+                $rootScope.$broadcast('frendship-changed');
+                $scope.success = true;
+                $scope.gatheringData = false;
+            }).error(function(error){
+                $scope.loadFailed = true;
+            });
+        };
+
+
+        $scope.$on('frendship-changed', function(data){
+            $scope.loadRequests();
+            $scope.loadFriends();
         });
 
-        $scope.showMore = function(){
+        $scope.showMoreFriends = function(){
             $scope.limit+=10;
-        }
+        };
 
+        $scope.showMoreRequests = function(){
+            $scope.limit+=10;
+        };
+
+         $scope.searchSpecyfic = function(item){
+            if ( (item.friend_nick.indexOf($scope.query) != -1) || (item.owner_nick.indexOf($scope.query) != -1) ){
+                return true;
+            }
+            return false;
+         };
     }]);

@@ -11,6 +11,8 @@
         <div class="container">
             <div class="intro-text " ng-controller="ModalCtrl">
                 <div class="intro-lead-in"><i class="fa fa-clock-o"></i> {{ event.date|date:"d E Y H:i"}}</div>
+                <div class="intro-lead-in"></div>
+                <div class="intro-lead-in"><i class="fa fa-link"></i> http:/{{ request.META.META.HTTP_HOST }}{{ event.url }}</div>
                 {% if event.owner != request.user %}
                 <div class="intro-lead-in"><i class="fa fa-user"></i> Utworzone przez: {{ event.owner.nick }}</div>
                 {% endif %}
@@ -22,7 +24,8 @@
 
     <section id="gifts" class="bg-light-gray">
         <div class="container">
-            <div class="container">
+            <div class="row">
+
                 {% for gift in gifts %}
 
 
@@ -48,6 +51,7 @@
                             <div class="btn-group" role="group" aria-label="..." ng-controller="ModalCtrl">
                                 {% if not gift.reservation_date %}
                                     <button type="button" ng-click="showModal('common/partials/reservation_modal',{controller:'BaseModalCtrl',additionalData:{idToEdit:'{{ gift.id |escapejs }}',user:'{{ request.user.id |escapejs }}'}})" class="btn btn-success pull-right"><i class="fa fa-check-circle-o"></i> Rezerwuj</button>
+
                                 {% else %}
                                     <div class="text-success">
                                         <i class="fa fa-check"></i> Zarezerwowany dnia: {{ gift.reservation_date|date:"SHORT_DATE_FORMAT" }}

@@ -1,0 +1,67 @@
+{% extends "base/base.html" %}
+{% load thumbnail %}
+{% load core_tags %}
+
+{% block navbar %}
+    {% include "base/wishes_navbar.html" %}
+{% endblock %}
+{% block content %}
+{% get_site_settings as settings %}
+    <header>
+        <div class="container">
+            <div class="intro-text " ng-controller="ModalCtrl">
+                <div class="intro-lead-in"><i class="fa fa-users"></i>Z kim chciałbyś się podzielić swoimi listami</div>
+                <div class="intro-heading">Szukaj znajomych</div>
+                <a href="#search" class="page-scroll btn btn-xl"><i class="fa fa-chevron-down"></i> Szukaj</a>
+            </div>
+        </div>
+    </header>
+<div >
+
+
+    <section id="search" class="bg-light-gray" ng-controller="FriendsCtrl"  ng-init="currentUserId='{{ request.user.id }}'">
+
+        <div class="container" ng-init="initSearch()">
+            <div class="row" ng-show="!gatheringData">
+
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Dodaj znajomych</h2>
+                    <h3 class="section-subheading text-muted">Wpisz nick szukanego użytkownika</h3>
+                </div>
+
+                    <div class="col-md-6 col-xs-12" >
+                        <div class="form-group">
+                            <div class="input-group">
+                            <input type="text" ng-model="searchString" class="form-control"
+                                   maxlength="50" placeholder="Szukaj... " id="email">
+                            <span  class="button btn btn-danger input-group-addon" ng-click="searchFriends()"><i class="fa fa-search"></i> Szukaj</span>
+                            </div>
+                                <p class="help-block text-danger text-left"></p>
+                        </div>
+                    </div>
+                    <div class="row border-bottom extra-space bottom" ng-repeat="u in users | limitTo: limitRequests as results  track by $index">
+                        <div class="col-md-8">
+                            <a href="{$ u.lists_url $}"><i class="fa fa-user-plus"></i> <h4 ng-bind="u.nick"></h4></a>
+                        </div>
+                        <div class="col-md-4 actions">
+                            <div class="btn-group pull-right" role="group" aria-label=".">
+                              <button type="button" class="button btn btn-default" ng-click="addToFriend(u.id,currentUserId)"><i class="fa fa-check"></i></button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div id="bottom" class="row" ng-show="gatheringData">
+                <div class="col-xs-12 text-center">
+                    <i class="fa fa-spinner fa-spin fa-5x"></i>
+                </div>
+            </div>
+            <div id="bottom" class="row" ng-show="!gatheringData&&!requests.lenght">
+                <div class="col-xs-12 text-center">
+                    <h5><i class="fa fa-info fa-2x"></i> Brak wyników</h5>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+{% endblock %}

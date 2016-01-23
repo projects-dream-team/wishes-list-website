@@ -12,10 +12,14 @@ from .models import *
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
+    url_to_lists = serializers.SerializerMethodField()
+
+    def get_url_to_lists(self, obj):
+        return obj.lists_url
 
     class Meta:
         model = User
-        fields = ('id', 'nick', 'email', 'password')
+        fields = ('id', 'nick', 'email', 'password', 'url_to_lists',)
 
     def create(self, validated_data):
         user = User()
@@ -30,10 +34,10 @@ class UserSerializer(serializers.ModelSerializer):
         page_url = request.META['HTTP_HOST']
         subject = _('Account registration')
         ctx = {"activate_link": "%s%s" % (page_url, reverse('users:activate', args=(code.code,))), "subject": subject,
-               "page_url": page_url, "nick":user.nick}
-        email_message =  get_template('email/index.html').render(Context(ctx))
+               "page_url": page_url, "nick": user.nick}
+        email_message = get_template('email/index.html').render(Context(ctx))
         try:
-            msg = EmailMessage(subject, email_message, to=[user.email,], from_email='projects.dream.team@gmail.com')
+            msg = EmailMessage(subject, email_message, to=[user.email, ], from_email='projects.dream.team@gmail.com')
             msg.content_subtype = 'html'
             msg.send()
         except:
@@ -43,8 +47,19 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class FriendshipSerializer(serializers.ModelSerializer):
+    owner_nick = serializers.CharField(source='owner.nick', read_only=True)
+    friend_nick = serializers.CharField(source='friend.nick', read_only=True)
+    user = serializers.SerializerMethodField()
+
     class Meta:
         model = Friendship
+
+    def get_user(self, obj):
+        request = self.context.get("request")
+        if request.user == obj.owner:
+            return UserSerializer(obj.friend).data
+        else:
+            return UserSerializer(obj.owner).data
 
 
 class UserCodeSerializer(serializers.ModelSerializer):

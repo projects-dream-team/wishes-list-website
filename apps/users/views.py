@@ -45,3 +45,8 @@ def my_profile(request):
 def my_friends(request):
     user = request.user
     return render(request, 'users/friends.html', {'user': user})
+
+@login_required
+def search_friends(request):
+    user = request.user
+    return render(request, 'users/search_friends.html', {'user': user})

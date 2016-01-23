@@ -1,0 +1,48 @@
+
+
+
+    <div class="close-modal" ng-click="close()">
+        <div class="lr">
+            <div class="rl">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" ng-controller="FriendsCtrl">
+        <div class="row">
+            <div class="col-xs-12" ng-init="success=false;gatheringData=false">
+                    <!-- Project Details Go Here -->
+                    <h2>Usuwanie z listy znajomych </h2>
+                        <div class="row">
+                            <div ng-show="!success">
+                                <div class="col-xs-12 text-center text-danger">
+                                    <i class="fa fa-exclamation-triangle fa-3x"></i>
+                                </div>
+                                <div class="col-xs-12 text-center text-danger">
+                                    <h4>Czy na pewno chcesz usunąć tego znajego?</h4>
+                                </div>
+                            </div>
+                            <div ng-show="success">
+                                <div class="col-xs-12 text-center text-success">
+                                    <i class="fa fa-exclamation-triangle fa-3x"></i>
+                                </div>
+                                <div class="col-xs-12 text-center text-success">
+                                    <h4>Usunięto znajomego</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="gatheringData">
+                            <div class="col-xs-12 text-center">
+                                <i class="fa fa-spinner fa-spin fa-5x"></i>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="!gatheringData&&!success">
+                            <div class="clearfix"></div>
+                            <div class="col-lg-12 text-center">
+                                <div id="success"></div>
+                                <button type="button" class="btn btn-xl" ng-click="decline(additionalData.friendship)"><i class="fa fa-trash-o"></i> Usuń</button>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
