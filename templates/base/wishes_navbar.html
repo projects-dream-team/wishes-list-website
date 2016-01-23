@@ -23,14 +23,15 @@
                         {% url 'users:my_profile' as my_profile %}
                         {% url 'wishes:my_lists' as my_lists %}
                         {% url 'users:my_friends' as my_friends %}
-                        <li ng-controller="ModalCtrl">
-                            <a class="" href="#" ng-click="showModal('common/partials/login_modal',{controller:'BaseModalCtrl'})"><i class="fa fa-gift"></i> Produkty z katalogu</a>
-                        </li>
+                        {% url 'users:search_friends' as search_friends %}
                         <li class="{% if request.get_full_path == my_profile %}active{% endif %}">
                             <a class="" href="{{ my_profile }}"><i class="fa fa-user"></i> Mój profil</a>
                         </li>
-                        <li class="{% if request.get_full_path == my_friends %}active{% endif %}">
-                            <a class="" href="{{ my_friends }}" ><i class="fa fa-users "></i> Znajomi</a>
+                        <li class="{% if request.get_full_path == my_friends %}active{% endif %}" ng-controller="FriendsCtrl" ng-init="loadRequests()">
+                            <a class="" href="{{ my_friends }}" ><i class="fa fa-users "></i> Znajomi <span class="badge" ng-bind="requests.length" ng-show="requests.length"></span></a>
+                        </li>
+                        <li class="{% if request.get_full_path == search_friends %}active{% endif %}">
+                            <a class="" href="{{ search_friends }}" ><i class="fa fa-search "></i> Szukaj znajomych </a>
                         </li>
                         <li class="{% if request.get_full_path == my_lists %}active{% endif %}">
                             <a class="" href="{{ my_lists }}" ><i class="fa fa-th-list"></i> Moje listy</a>

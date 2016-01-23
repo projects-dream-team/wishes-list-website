@@ -23,6 +23,18 @@ class UserViewSet(RetrieveModelMixin,
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
     queryset = User.objects.active()
     serializer_class = UserSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('nick', 'email')
+
+
+class SearchFriends(
+    ListModelMixin,
+    GenericViewSet):
+    permission_classes = (IsAuthenticated,)
+    queryset = User.objects.active()
+    serializer_class = UserSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('nick', 'email')
 
 
 class CurrentUserViewSet(RetrieveModelMixin, GenericViewSet):
@@ -35,18 +47,22 @@ class CurrentUserViewSet(RetrieveModelMixin, GenericViewSet):
 
 class FrendshipViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = Friendship.objects.active()
+    queryset = Friendship.objects.all()
     serializer_class = FriendshipSerializer
 
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = ('creator','friend','is_active')
+    filter_fields = ('owner', 'friend', 'is_active')
 
     def get_queryset(self):
-        requests = self.request.GET.get('requests',False)
+        requests = self.request.GET.get('requests', False)
+        friends = self.request.GET.get('friends', False)
         if requests:
-            queryset = Friendship.objects.filter(Q(is_active=False) | Q(friend=self.request.user))
+            queryset = Friendship.objects.filter(is_active=False).filter(friend=self.request.user)
+        elif friends:
+            queryset = Friendship.objects.active().filter(Q(owner=self.request.user) | Q(friend=self.request.user))
         else:
-            queryset = Friendship.objects.filter(Q(creator=self.request.user) | Q(friend=self.request.user))
+            queryset = Friendship.objects.all()
+
         return queryset
 
 

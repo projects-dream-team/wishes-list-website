@@ -10,20 +10,16 @@
     <header>
         <div class="container">
             <div class="intro-text " ng-controller="ModalCtrl">
-                <div class="intro-lead-in"><i class="fa fa-users"></i> z nimi możesz dzielić się swoimi listami</div>
-                <div class="intro-heading">Twoi znajomi</div>
-                                <a href="{% url "users:search_friends" %}" class="btn btn-xl"><i class="fa fa-search"></i>
-Szukaj nowych</a>
-                <div class="intro-lead-in"></div>
-                <div class="intro-lead-in">lub</div>
-                <a href="#requests" class="page-scroll btn btn-xl"><i class="fa fa-chevron-down"></i> Zobacz znajomych</a>
+                <div class="intro-lead-in"><i class="fa fa-users"></i>Z kim chciałbyś się podzielić swoimi listami</div>
+                <div class="intro-heading">Szukaj znajomych</div>
+                <a href="#search" class="page-scroll btn btn-xl"><i class="fa fa-chevron-down"></i> Szukaj</a>
             </div>
         </div>
     </header>
 <div >
 
 
-    <section id="requests" class="bg-light-gray" ng-controller="FriendsCtrl"  ng-init="currentUserNick='{{ request.user.nick }}'">
+    <section id="search" class="bg-light-gray" ng-controller="FriendsCtrl"  ng-init="currentUserNick='{{ request.user.nick }}'">
 
         <div class="container" ng-init="loadRequests()">
             <div class="row" ng-show="!gatheringData">
@@ -75,7 +71,7 @@ Szukaj nowych</a>
                 </div>
                     <div class="col-md-6 col-xs-12">
                         <div class="form-group">
-                            <input type="text" ng-model="search.user.nick" class="form-control"
+                            <input type="text" ng-model="search.friend_nick" class="form-control"
                                    maxlength="50" placeholder="Szukaj... " id="email">
 
                             <p class="help-block text-danger text-left"></p>
@@ -85,13 +81,12 @@ Szukaj nowych</a>
                     </div>
                     <div class="row border-bottom extra-space bottom" ng-repeat="f in filtered = (friends | filter:search ) | limitTo: limitFriends as results  track by $index">
                         <div class="col-md-8">
-                            <a href="{$ event.full_url $}"><h4 ><i class="fa fa-user"></i> <span ng-bind="f.user.nick"></span></h4></a>
+                            <a href="{$ event.full_url $}"><h4 ><i class="fa fa-user"></i> <span ng-bind="f.friend_nick" ng-show="f.friend_nick!=currentUserNick"></span> <span ng-bind="f.owner_nick" ng-show="f.owner_nick!=currentUserNick"></span></h4></a>
                             <h5><span ng-bind="event.date | date: 'd MMM yyyy H:mm'"></span></h5>
                         </div>
                         <div class="col-md-4 actions" ng-controller="ModalCtrl">
                             <div class="btn-group pull-right" role="group" aria-label=".">
-                              <button type="button" class="button btn btn-danger" ng-click="showModal('common/partials/delete_friend_modal',{controller:'BaseModalCtrl',additionalData:{idToEdit:f.id,friendship:f}})"><i class="fa fa-trash-o"></i></button>
-                                <a href="{$f.user.url_to_lists$}" class="button btn btn-info"><i class="fa fa-list"></i> Zobacz listy</a>
+                              <button type="button" class="button btn btn-danger" ng-click="showModal('common/partials/delete_event_modal',{controller:'DeleteEventCtrl',additionalData:{idToEdit:event.id,name:event.name}})"><i class="fa fa-trash-o"></i></button>
                             </div>
                         </div>
                     </div>

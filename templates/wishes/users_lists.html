@@ -1,0 +1,56 @@
+{% extends "base/base.html" %}
+{% load thumbnail %}
+{% load core_tags %}
+
+{% block navbar %}
+    {% include "base/wishes_navbar.html" %}
+{% endblock %}
+{% block content %}
+{% get_site_settings as settings %}
+    <header>
+        <div class="container">
+            <div class="intro-text " ng-controller="ModalCtrl">
+                <div class="intro-heading">Listy użytkownika {{ owner.nick }}</div>
+                <a href="#myLists" class="page-scroll btn btn-xl"><i class="fa fa-chevron-down"></i> Przeglądaj</a>
+            </div>
+        </div>
+    </header>
+    <section id="myLists" class="bg-light-gray" ng-controller="EventListCtrl">
+        <div class="container">
+            <div class="container" ng-init="initData({{ owner.id | escapejs }})" ng-show="!gatheringData">
+
+                    <div class="col-md-6 col-xs-12">
+                        <div class="form-group">
+                            <input type="text" ng-model="search.name" class="form-control"
+                                   maxlength="50" placeholder="Szukaj... " id="email">
+
+                            <p class="help-block text-danger text-left"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <div class="btn-group">
+                            <label class="btn btn-success" ng-model="showFuture" uib-btn-radio="true" uncheckable>Nadchodzące</label>
+                            <label class="btn btn-success" ng-model="showFuture" uib-btn-radio="false" uncheckable>Wszystkie</label>
+                        </div>
+                    </div>
+                    <div class="row border-bottom extra-space bottom" ng-repeat="event in filtered = (lists | isAfter:'date':showFuture | filter:search | orderBy: '-date':true) | limitTo: limit as results  track by $index">
+                        <div class="col-md-8">
+                            <a href="{$ event.full_url $}"><h4 ng-bind="event.name"></h4></a>
+                            <h5><i class="fa fa-clock-o"></i> <span ng-bind="event.date | date: 'd MMM yyyy H:mm'"></span></h5>
+                        </div>
+                    </div>
+            </div>
+            <div id="bottom" class="row" ng-show="filtered.length > results.length&&!gatheringData">
+                <div class="col-xs-12 text-center">
+                    <a href="#bottom" class="btn btn-xl page-scroll" ng-click="showMore()">Wczytaj więcej</a>
+                </div>
+            </div>
+            <div id="bottom" class="row" ng-show="gatheringData">
+                <div class="col-xs-12 text-center">
+                    <i class="fa fa-spinner fa-spin fa-5x"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+    <a href="#myLists" class="go-up page-scroll btn btn-primary" data-spy="affix" data-offset-top="1000"><i class="fa fa-chevron-up fa-2x"></i></a>
+{% endblock %}

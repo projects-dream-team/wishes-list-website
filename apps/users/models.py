@@ -5,6 +5,7 @@ import random
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.core.urlresolvers import reverse
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
@@ -66,6 +67,10 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     @property
     def is_staff(self):
         return self.is_admin
+
+    @property
+    def lists_url(self):
+        return reverse('wishes:users_lists',kwargs={'owner_id':self.id})
 
     def __str__(self):
         return self.nick
@@ -131,14 +136,14 @@ class UserCode(models.Model):
 
 @python_2_unicode_compatible
 class Friendship(BaseModel):
-    creator = models.ForeignKey(User, verbose_name=_('Creator'), related_name="friendship_creator_set")
+    owner = models.ForeignKey(User, verbose_name=_('Creator'), related_name="friendship_creator_set")
     friend = models.ForeignKey(User, verbose_name=_('Friend'), related_name="friend_set")
 
     class Meta:
         verbose_name = _('Friendship')
         verbose_name_plural = _('Friendships')
-        unique_together = ['creator', 'friend']
+        unique_together = ['owner', 'friend']
 
     def __str__(self):
-        return unicode(_('%(creator)s has added %(friend)s to firends.') % {'creator': self.creator.nick,
+        return unicode(_('%(creator)s has added %(friend)s to firends.') % {'creator': self.owner.nick,
                                                                             'friend': self.friend.nick})
